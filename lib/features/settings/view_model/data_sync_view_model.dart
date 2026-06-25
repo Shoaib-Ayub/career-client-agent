@@ -1,4 +1,5 @@
 import 'package:career_client_agent/core/constants/app_strings.dart';
+import 'package:career_client_agent/core/constants/app_constants.dart';
 import 'package:career_client_agent/core/storage/repository_providers.dart';
 import 'package:career_client_agent/features/client_leads/view_model/client_leads_view_model.dart';
 import 'package:career_client_agent/features/daily_report/view_model/daily_report_view_model.dart';
@@ -32,15 +33,30 @@ class DataSyncViewModel extends AsyncNotifier<SyncState> {
     if (current == null || current.isSyncing) {
       return false;
     }
-    state = AsyncData(current.copyWith(isSyncing: true, clearError: true));
+    state = AsyncData(
+      current.copyWith(
+        status: current.status.copyWith(
+          syncStatus: AppConstants.syncStatusSyncing,
+        ),
+        isSyncing: true,
+        clearError: true,
+      ),
+    );
     try {
       final status = await ref.read(dataSyncServiceProvider).sync();
       state = AsyncData(SyncState(status: status));
       _invalidateOpportunityViews();
       return true;
-    } on Exception {
+    } on Exception catch (error) {
+      final failedStatus = await ref
+          .read(dataSyncServiceProvider)
+          .recordFailure(error);
       state = AsyncData(
-        current.copyWith(isSyncing: false, errorMessage: AppStrings.syncFailed),
+        current.copyWith(
+          status: failedStatus,
+          isSyncing: false,
+          errorMessage: AppStrings.syncFailed,
+        ),
       );
       return false;
     }

@@ -1,5 +1,10 @@
+import 'package:career_client_agent/core/config/app_config.dart';
 import 'package:career_client_agent/core/constants/app_constants.dart';
+import 'package:career_client_agent/core/storage/models/client_lead_model.dart';
+import 'package:career_client_agent/core/storage/models/government_job_model.dart';
+import 'package:career_client_agent/core/storage/models/job_model.dart';
 import 'package:career_client_agent/core/storage/models/opportunity_result.dart';
+import 'package:career_client_agent/core/storage/models/scholarship_model.dart';
 import 'package:career_client_agent/core/storage/repository_providers.dart';
 import 'package:career_client_agent/features/settings/model/backend_run_status.dart';
 import 'package:career_client_agent/features/settings/service/notification_coordinator.dart';
@@ -20,70 +25,46 @@ class DataSyncService {
     final scholarshipsRepository = ref.read(scholarshipsRepositoryProvider);
     final governmentJobsRepository = ref.read(governmentJobsRepositoryProvider);
     final clientLeadsRepository = ref.read(clientLeadsRepositoryProvider);
-    final results = await Future.wait([
-      jobsRepository.fetchLatest(),
-      scholarshipsRepository.fetchLatest(),
-      governmentJobsRepository.fetchLatest(),
-      clientLeadsRepository.fetchLatest(),
+    final downloads = await Future.wait<Object>([
+      jobsRepository.downloadRemote(),
+      scholarshipsRepository.downloadRemote(),
+      governmentJobsRepository.downloadRemote(),
+      clientLeadsRepository.downloadRemote(),
+      ref.read(syncStatusRepositoryProvider).loadRemoteBackendStatus(),
     ]);
-    final allResults = results
-        .expand((items) => items)
-        .cast<OpportunityResult>()
-        .toList();
-
-    BackendRunStatus backendStatus;
-    try {
-      backendStatus = await ref
-          .read(syncStatusRepositoryProvider)
-          .loadBackendStatus();
-    } on Exception {
-      backendStatus = BackendRunStatus(
-        lastRunTime: allResults.isEmpty
-            ? current.lastRunTime
-            : allResults
-                  .map((item) => item.foundAt)
-                  .reduce((a, b) => a.isAfter(b) ? a : b),
-      );
-    }
+    final jobs = downloads[0] as List<JobModel>;
+    final scholarships = downloads[1] as List<ScholarshipModel>;
+    final governmentJobs = downloads[2] as List<GovernmentJobModel>;
+    final clientLeads = downloads[3] as List<ClientLeadModel>;
+    final backendStatus = downloads[4] as BackendRunStatus;
+    await Future.wait([
+      jobsRepository.saveDownloaded(jobs),
+      scholarshipsRepository.saveDownloaded(scholarships),
+      governmentJobsRepository.saveDownloaded(governmentJobs),
+      clientLeadsRepository.saveDownloaded(clientLeads),
+    ]);
+    final results = <List<OpportunityResult>>[
+      jobs,
+      scholarships,
+      governmentJobs,
+      clientLeads,
+    ];
+    final allResults = results.expand((items) => items).toList();
 
     final updated = backendStatus.copyWith(
       lastSyncedAt: DateTime.now(),
-      totalJobs: results[0].length,
-      totalScholarships: results[1].length,
-      totalGovernmentJobs: results[2].length,
-      totalClientLeads: results[3].length,
+      totalJobs: jobs.length,
+      totalScholarships: scholarships.length,
+      totalGovernmentJobs: governmentJobs.length,
+      totalClientLeads: clientLeads.length,
       autoRefreshOnLaunch: current.autoRefreshOnLaunch,
       refreshIntervalHours: current.refreshIntervalHours,
-      syncStatus: _syncStatus([
-        jobsRepository.lastSourceUsed,
-        scholarshipsRepository.lastSourceUsed,
-        governmentJobsRepository.lastSourceUsed,
-        clientLeadsRepository.lastSourceUsed,
-      ]),
-      sourceUsed: _sourceUsed([
-        jobsRepository.lastSourceUsed,
-        scholarshipsRepository.lastSourceUsed,
-        governmentJobsRepository.lastSourceUsed,
-        clientLeadsRepository.lastSourceUsed,
-      ]),
-      recordsDownloaded: _recordsDownloaded(results, [
-        jobsRepository.lastSourceUsed,
-        scholarshipsRepository.lastSourceUsed,
-        governmentJobsRepository.lastSourceUsed,
-        clientLeadsRepository.lastSourceUsed,
-      ]),
-      lastError: _lastError([
-        jobsRepository.lastError,
-        scholarshipsRepository.lastError,
-        governmentJobsRepository.lastError,
-        clientLeadsRepository.lastError,
-      ]),
-      clearLastError: [
-        jobsRepository.lastError,
-        scholarshipsRepository.lastError,
-        governmentJobsRepository.lastError,
-        clientLeadsRepository.lastError,
-      ].every((error) => error == null),
+      syncStatus: AppConstants.syncStatusSuccess,
+      sourceUsed: AppConfig.apiEnabled
+          ? AppConstants.dataSourceApi
+          : AppConstants.dataSourceRemoteJson,
+      recordsDownloaded: allResults.length,
+      clearLastError: true,
     );
     await ref.read(syncStatusRepositoryProvider).saveStatus(updated);
     final previousSync = current.lastSyncedAt;
@@ -94,8 +75,7 @@ class DataSyncService {
         .read(notificationCoordinatorProvider)
         .notifyNewOpportunities(
           newOpportunityCount: newItems.length,
-          newJobs: results[0]
-              .cast<OpportunityResult>()
+          newJobs: jobs
               .where(
                 (item) =>
                     previousSync == null || item.foundAt.isAfter(previousSync),
@@ -105,35 +85,17 @@ class DataSyncService {
     return updated;
   }
 
-  String _sourceUsed(List<String> sources) {
-    final unique = sources.toSet();
-    return unique.length == 1 ? unique.single : AppConstants.dataSourceMixed;
-  }
-
-  String _syncStatus(List<String> sources) {
-    return sources.every(
-          (source) =>
-              source == AppConstants.dataSourceRemoteJson ||
-              source == AppConstants.dataSourceApi,
-        )
-        ? AppConstants.syncStatusSuccess
-        : AppConstants.syncStatusFallback;
-  }
-
-  int _recordsDownloaded(List<List<Object>> results, List<String> sources) {
-    var downloaded = 0;
-    for (var index = 0; index < results.length; index++) {
-      if (sources[index] == AppConstants.dataSourceRemoteJson ||
-          sources[index] == AppConstants.dataSourceApi) {
-        downloaded += results[index].length;
-      }
-    }
-    return downloaded;
-  }
-
-  String? _lastError(List<String?> errors) {
-    final messages = errors.whereType<String>().toSet();
-    return messages.isEmpty ? null : messages.join('\n');
+  Future<BackendRunStatus> recordFailure(Object error) async {
+    final repository = ref.read(syncStatusRepositoryProvider);
+    final current = await repository.getStatus();
+    final failed = current.copyWith(
+      syncStatus: AppConstants.syncStatusError,
+      sourceUsed: AppConstants.dataSourceRemoteJson,
+      recordsDownloaded: 0,
+      lastError: error.toString(),
+    );
+    await repository.saveStatus(failed);
+    return failed;
   }
 
   Future<void> clearOpportunityCache() async {

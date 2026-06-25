@@ -79,4 +79,25 @@ class ScholarshipsRepository extends HiveRepository<ScholarshipModel> {
     lastSourceUsed = AppConstants.dataSourceBundledAssets;
     return models;
   }
+
+  Future<List<ScholarshipModel>> downloadRemote() async {
+    final service = _service;
+    if (service != null) {
+      lastSourceUsed = AppConstants.dataSourceApi;
+      return (await service.fetchScholarships())
+          .map(ScholarshipMapper.toModel)
+          .toList();
+    }
+    final dataSource = _jsonDataSource;
+    if (dataSource == null || !dataSource.hasRemote) {
+      throw StateError('Remote scholarships source is not configured.');
+    }
+    lastSourceUsed = AppConstants.dataSourceRemoteJson;
+    return (await dataSource.loadRemote())
+        .map(ScholarshipMapper.toModel)
+        .toList();
+  }
+
+  Future<void> saveDownloaded(List<ScholarshipModel> models) =>
+      replaceAll(models);
 }

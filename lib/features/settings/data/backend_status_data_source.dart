@@ -1,7 +1,9 @@
 import 'dart:convert';
 
 import 'package:career_client_agent/core/constants/app_constants.dart';
+import 'package:career_client_agent/core/constants/app_strings.dart';
 import 'package:career_client_agent/core/data/remote_json_data_source.dart';
+import 'package:career_client_agent/core/network/network_exception.dart';
 import 'package:career_client_agent/core/network/remote_json_endpoints.dart';
 import 'package:career_client_agent/features/settings/model/backend_run_status.dart';
 import 'package:flutter/services.dart';
@@ -16,13 +18,19 @@ class BackendStatusDataSource {
   final AssetBundle _assetBundle;
   final RemoteJsonDataSource? _remote;
 
+  Future<BackendRunStatus> loadRemote() async {
+    final remote = _remote;
+    if (remote == null) {
+      throw const NetworkException(AppStrings.remoteDataNotConfigured);
+    }
+    return _fromJson(await remote.loadObject(RemoteJsonEndpoints.runStatus));
+  }
+
   Future<BackendRunStatus> load() async {
     final remote = _remote;
     if (remote != null) {
       try {
-        return _fromJson(
-          await remote.loadObject(RemoteJsonEndpoints.runStatus),
-        );
+        return await loadRemote();
       } on Exception {
         // The bundled status remains available when remote status fails.
       }

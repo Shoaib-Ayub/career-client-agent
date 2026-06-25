@@ -15,11 +15,13 @@ import 'package:career_client_agent/features/government_jobs/data/data_source/go
 import 'package:career_client_agent/features/government_jobs/repository/government_jobs_repository.dart';
 import 'package:career_client_agent/features/jobs/data/data_source/jobs_json_data_source.dart';
 import 'package:career_client_agent/features/jobs/repository/jobs_repository.dart';
+import 'package:career_client_agent/features/jobs/view_model/jobs_view_model.dart';
 import 'package:career_client_agent/features/scholarships/data/data_source/scholarships_json_data_source.dart';
 import 'package:career_client_agent/features/scholarships/repository/scholarships_repository.dart';
 import 'package:career_client_agent/features/settings/data/backend_status_data_source.dart';
 import 'package:career_client_agent/features/settings/repository/sync_status_repository.dart';
 import 'package:career_client_agent/features/settings/service/data_sync_service.dart';
+import 'package:career_client_agent/features/settings/view_model/data_sync_view_model.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hive_ce/hive.dart';
@@ -288,6 +290,138 @@ void main() {
       expect(status.lastError, isNull);
     },
   );
+
+  test('failed manual sync keeps all previously cached data', () async {
+    const storage = LocalStorageService();
+    final successfulRemote = RemoteJsonDataSource(
+      baseUrl: 'https://raw.example/data',
+      client: MockClient((request) async {
+        if (request.url.path.endsWith('run_status.json')) {
+          return http.Response(_runStatusJson, 200);
+        }
+        return http.Response('[$_remoteJobJson]', 200);
+      }),
+    );
+    final successfulContainer = _syncContainer(storage, successfulRemote);
+    await successfulContainer.read(dataSyncServiceProvider).sync();
+    successfulContainer.dispose();
+
+    final failingRemote = RemoteJsonDataSource(
+      baseUrl: 'https://raw.example/data',
+      client: MockClient((request) async {
+        if (request.url.path.endsWith('scholarships/latest.json')) {
+          return http.Response('missing', 404);
+        }
+        if (request.url.path.endsWith('run_status.json')) {
+          return http.Response(_runStatusJson, 200);
+        }
+        return http.Response('[$_newRemoteJobJson]', 200);
+      }),
+    );
+    final failingContainer = _syncContainer(storage, failingRemote);
+    addTearDown(failingContainer.dispose);
+    await failingContainer.read(dataSyncViewModelProvider.future);
+
+    final succeeded = await failingContainer
+        .read(dataSyncViewModelProvider.notifier)
+        .syncNow();
+    final cachedJobs = await storage.getAll(AppConstants.jobsBoxName);
+    final syncState = failingContainer.read(dataSyncViewModelProvider).value!;
+
+    expect(succeeded, isFalse);
+    expect(cachedJobs, hasLength(1));
+    expect(cachedJobs.single['title'], 'Remote Flutter Job');
+    expect(syncState.status.syncStatus, AppConstants.syncStatusError);
+    expect(syncState.status.recordsDownloaded, 0);
+    expect(syncState.status.sourceUsed, AppConstants.dataSourceRemoteJson);
+  });
+
+  test(
+    'refresh action updates records exposed to opportunity screens',
+    () async {
+      var jobsRequests = 0;
+      const storage = LocalStorageService();
+      final remote = RemoteJsonDataSource(
+        baseUrl: 'https://raw.example/data',
+        client: MockClient((request) async {
+          if (request.url.path.endsWith('run_status.json')) {
+            return http.Response(_runStatusJson, 200);
+          }
+          if (request.url.path.endsWith('jobs/latest.json')) {
+            jobsRequests++;
+            return http.Response(
+              '[${jobsRequests == 1 ? _remoteJobJson : _newRemoteJobJson}]',
+              200,
+            );
+          }
+          return http.Response('[$_remoteJobJson]', 200);
+        }),
+      );
+      final container = _syncContainer(storage, remote);
+      addTearDown(container.dispose);
+
+      final before = await container.read(jobsViewModelProvider.future);
+      await container.read(dataSyncViewModelProvider.future);
+      final succeeded = await container
+          .read(dataSyncViewModelProvider.notifier)
+          .syncNow();
+      final after = await container.read(jobsViewModelProvider.future);
+
+      expect(before.items.single.title, 'Remote Flutter Job');
+      expect(succeeded, isTrue);
+      expect(after.items.single.title, 'Updated Remote Flutter Job');
+      expect(jobsRequests, greaterThanOrEqualTo(2));
+    },
+  );
+}
+
+ProviderContainer _syncContainer(
+  LocalStorageService storage,
+  RemoteJsonDataSource remote,
+) {
+  return ProviderContainer(
+    overrides: [
+      jobsRepositoryProvider.overrideWithValue(
+        JobsRepository(
+          storage,
+          jsonDataSource: JobsJsonDataSource(
+            LatestJsonAssetLoader(),
+            remote: remote,
+          ),
+        ),
+      ),
+      scholarshipsRepositoryProvider.overrideWithValue(
+        ScholarshipsRepository(
+          storage,
+          jsonDataSource: ScholarshipsJsonDataSource(
+            LatestJsonAssetLoader(),
+            remote: remote,
+          ),
+        ),
+      ),
+      governmentJobsRepositoryProvider.overrideWithValue(
+        GovernmentJobsRepository(
+          storage,
+          jsonDataSource: GovernmentJobsJsonDataSource(
+            LatestJsonAssetLoader(),
+            remote: remote,
+          ),
+        ),
+      ),
+      clientLeadsRepositoryProvider.overrideWithValue(
+        ClientLeadsRepository(
+          storage,
+          jsonDataSource: ClientLeadsJsonDataSource(
+            LatestJsonAssetLoader(),
+            remote: remote,
+          ),
+        ),
+      ),
+      syncStatusRepositoryProvider.overrideWithValue(
+        SyncStatusRepository(storage, BackendStatusDataSource(remote: remote)),
+      ),
+    ],
+  );
 }
 
 RemoteJsonDataSource _remoteWithResponse(String body, int statusCode) {
@@ -313,6 +447,27 @@ const _remoteJobJson = '''
   "why_match": ["Flutter"],
   "cv_suggestions": [],
   "found_at": "2026-06-24T08:00:00Z",
+  "source_name": "GitHub Raw Test",
+  "freshness_status": "today"
+}
+''';
+
+const _newRemoteJobJson = '''
+{
+  "title": "Updated Remote Flutter Job",
+  "organization": "Updated Remote Company",
+  "location": "Remote",
+  "source_link": "https://example.com/jobs/updated-flutter",
+  "posted_date": "2026-06-25",
+  "deadline": "2026-07-25",
+  "skills": ["Flutter", "Firebase"],
+  "match_score": 95,
+  "fresher_friendly": true,
+  "visa_sponsorship": false,
+  "training_provided": true,
+  "why_match": ["Flutter"],
+  "cv_suggestions": [],
+  "found_at": "2026-06-25T08:00:00Z",
   "source_name": "GitHub Raw Test",
   "freshness_status": "today"
 }

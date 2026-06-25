@@ -79,4 +79,20 @@ class JobsRepository extends HiveRepository<JobModel> {
     lastSourceUsed = AppConstants.dataSourceBundledAssets;
     return models;
   }
+
+  Future<List<JobModel>> downloadRemote() async {
+    final service = _service;
+    if (service != null) {
+      lastSourceUsed = AppConstants.dataSourceApi;
+      return (await service.fetchJobs()).map(JobMapper.toModel).toList();
+    }
+    final dataSource = _jsonDataSource;
+    if (dataSource == null || !dataSource.hasRemote) {
+      throw StateError('Remote jobs source is not configured.');
+    }
+    lastSourceUsed = AppConstants.dataSourceRemoteJson;
+    return (await dataSource.loadRemote()).map(JobMapper.toModel).toList();
+  }
+
+  Future<void> saveDownloaded(List<JobModel> models) => replaceAll(models);
 }

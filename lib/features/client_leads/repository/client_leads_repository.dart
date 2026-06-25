@@ -79,4 +79,25 @@ class ClientLeadsRepository extends HiveRepository<ClientLeadModel> {
     lastSourceUsed = AppConstants.dataSourceBundledAssets;
     return models;
   }
+
+  Future<List<ClientLeadModel>> downloadRemote() async {
+    final service = _service;
+    if (service != null) {
+      lastSourceUsed = AppConstants.dataSourceApi;
+      return (await service.fetchClientLeads())
+          .map(ClientLeadMapper.toModel)
+          .toList();
+    }
+    final dataSource = _jsonDataSource;
+    if (dataSource == null || !dataSource.hasRemote) {
+      throw StateError('Remote client leads source is not configured.');
+    }
+    lastSourceUsed = AppConstants.dataSourceRemoteJson;
+    return (await dataSource.loadRemote())
+        .map(ClientLeadMapper.toModel)
+        .toList();
+  }
+
+  Future<void> saveDownloaded(List<ClientLeadModel> models) =>
+      replaceAll(models);
 }

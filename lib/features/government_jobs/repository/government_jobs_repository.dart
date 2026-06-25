@@ -79,4 +79,25 @@ class GovernmentJobsRepository extends HiveRepository<GovernmentJobModel> {
     lastSourceUsed = AppConstants.dataSourceBundledAssets;
     return models;
   }
+
+  Future<List<GovernmentJobModel>> downloadRemote() async {
+    final service = _service;
+    if (service != null) {
+      lastSourceUsed = AppConstants.dataSourceApi;
+      return (await service.fetchGovernmentJobs())
+          .map(GovernmentJobMapper.toModel)
+          .toList();
+    }
+    final dataSource = _jsonDataSource;
+    if (dataSource == null || !dataSource.hasRemote) {
+      throw StateError('Remote government jobs source is not configured.');
+    }
+    lastSourceUsed = AppConstants.dataSourceRemoteJson;
+    return (await dataSource.loadRemote())
+        .map(GovernmentJobMapper.toModel)
+        .toList();
+  }
+
+  Future<void> saveDownloaded(List<GovernmentJobModel> models) =>
+      replaceAll(models);
 }

@@ -31,6 +31,9 @@ class SyncStatusRepository extends HiveRepository<SyncStatusModel> {
 
   Future<BackendRunStatus> loadBackendStatus() => _dataSource.load();
 
+  Future<BackendRunStatus> loadRemoteBackendStatus() =>
+      _dataSource.loadRemote();
+
   Future<void> saveStatus(BackendRunStatus status) {
     return update(SyncStatusModel.fromDomain(status));
   }

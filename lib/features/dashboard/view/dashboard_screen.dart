@@ -48,7 +48,8 @@ class _DashboardSuccess extends ConsumerWidget {
     final summaries = ref
         .read(dashboardViewModelProvider.notifier)
         .summaries(state);
-    final syncStatus = ref.watch(dataSyncViewModelProvider).value?.status;
+    final dataSync = ref.watch(dataSyncViewModelProvider).value;
+    final syncStatus = dataSync?.status;
     final lastSyncTime = syncStatus?.lastSyncedAt ?? state.lastSyncTime;
     final dataSource = syncStatus?.sourceUsed ?? state.dataSource;
     final recordsDownloaded =
@@ -94,12 +95,12 @@ class _DashboardSuccess extends ConsumerWidget {
                         ),
                         const SizedBox(width: AppSizes.spaceMd),
                         RefreshButton(
-                          isLoading: state.isRefreshing,
+                          isLoading: dataSync?.isSyncing ?? false,
                           onPressed: () => RefreshFeedback.show(
                             context,
                             ref
-                                .read(dashboardViewModelProvider.notifier)
-                                .refresh,
+                                .read(dataSyncViewModelProvider.notifier)
+                                .syncNow,
                           ),
                         ),
                       ],

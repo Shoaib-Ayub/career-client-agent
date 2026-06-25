@@ -107,9 +107,10 @@ abstract final class AppConstants {
   static const successStatusCodeEnd = 299;
   static const syncStatusSuccess = 'success';
   static const syncStatusFallback = 'fallback';
-  static const syncStatusError = 'error';
+  static const syncStatusSyncing = 'syncing';
+  static const syncStatusError = 'failed';
   static const dataSourceApi = 'API';
-  static const dataSourceRemoteJson = 'GitHub Raw JSON';
+  static const dataSourceRemoteJson = 'remote_github';
   static const dataSourceHiveCache = 'Hive Cache';
   static const dataSourceBundledAssets = 'Bundled Assets';
   static const dataSourceMixed = 'Mixed Sources';
