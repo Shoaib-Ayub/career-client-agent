@@ -161,6 +161,14 @@ def _snapshot_health_entry(status: str) -> dict[str, object]:
     }
 
 
+def _snapshot_timestamp(*, hours_ago: float = 0) -> str:
+    generated_at = datetime.now(timezone.utc) - timedelta(hours=hours_ago)
+    return generated_at.replace(microsecond=0).isoformat().replace(
+        "+00:00",
+        "Z",
+    )
+
+
 class SourceCollectorTests(unittest.TestCase):
     def setUp(self) -> None:
         self.task = SearchTask(
@@ -985,9 +993,10 @@ class SourceCollectorTests(unittest.TestCase):
             snapshot_storage = GovernmentJobsSnapshotStorage(
                 snapshot_directory
             )
+            generated_at = _snapshot_timestamp(hours_ago=1)
             snapshot_storage.write_snapshot(
                 "FPSC",
-                "2026-06-23T08:00:00Z",
+                generated_at,
                 [_cached_government_record()],
             )
             agent = GovernmentJobsAgent(
@@ -1001,7 +1010,7 @@ class SourceCollectorTests(unittest.TestCase):
             self.assertTrue(results[0].is_cached)
             self.assertEqual(
                 results[0].cached_from_run,
-                "2026-06-23T08:00:00Z",
+                generated_at,
             )
             report = agent.source_reports[0]
             self.assertTrue(report["cache_snapshot_used"])
@@ -1021,7 +1030,7 @@ class SourceCollectorTests(unittest.TestCase):
                 snapshot_directory
             ).write_snapshot(
                 "FPSC",
-                "2026-06-23T08:00:00Z",
+                _snapshot_timestamp(hours_ago=1),
                 [expired],
             )
             agent = GovernmentJobsAgent(
@@ -1039,21 +1048,18 @@ class SourceCollectorTests(unittest.TestCase):
     def test_government_snapshot_health_reports_fresh(self) -> None:
         with TemporaryDirectory() as directory:
             storage = GovernmentJobsSnapshotStorage(Path(directory))
+            now = datetime.now(timezone.utc).replace(microsecond=0)
             storage.write_snapshot(
                 "FPSC",
-                "2026-06-24T08:00:00Z",
+                (now - timedelta(hours=24))
+                .isoformat()
+                .replace("+00:00", "Z"),
                 [_cached_government_record()],
             )
 
             health = storage.snapshot_health(
                 "FPSC",
-                now=datetime(
-                    2026,
-                    6,
-                    25,
-                    8,
-                    tzinfo=timezone.utc,
-                ),
+                now=now,
             )
 
             self.assertEqual(health["snapshot_health"], "fresh")
@@ -1063,21 +1069,18 @@ class SourceCollectorTests(unittest.TestCase):
     def test_government_snapshot_health_reports_stale(self) -> None:
         with TemporaryDirectory() as directory:
             storage = GovernmentJobsSnapshotStorage(Path(directory))
+            now = datetime.now(timezone.utc).replace(microsecond=0)
             storage.write_snapshot(
                 "FPSC",
-                "2026-06-20T08:00:00Z",
+                (now - timedelta(hours=96))
+                .isoformat()
+                .replace("+00:00", "Z"),
                 [_cached_government_record()],
             )
 
             health = storage.snapshot_health(
                 "FPSC",
-                now=datetime(
-                    2026,
-                    6,
-                    24,
-                    8,
-                    tzinfo=timezone.utc,
-                ),
+                now=now,
             )
 
             self.assertEqual(health["snapshot_health"], "stale")
@@ -1088,7 +1091,7 @@ class SourceCollectorTests(unittest.TestCase):
             storage = GovernmentJobsSnapshotStorage(Path(directory))
             storage.write_snapshot(
                 "FPSC",
-                "2026-06-24T08:00:00Z",
+                _snapshot_timestamp(hours_ago=1),
                 [],
             )
 
@@ -1219,7 +1222,7 @@ class SourceCollectorTests(unittest.TestCase):
                 snapshot_directory
             ).write_snapshot(
                 "FPSC",
-                "2026-06-20T08:00:00Z",
+                _snapshot_timestamp(hours_ago=96),
                 [_cached_government_record()],
             )
             agent = GovernmentJobsAgent(
@@ -1255,7 +1258,7 @@ class SourceCollectorTests(unittest.TestCase):
                 snapshot_directory
             ).write_snapshot(
                 "FPSC",
-                "2026-06-20T08:00:00Z",
+                _snapshot_timestamp(hours_ago=96),
                 [invalid],
             )
             agent = GovernmentJobsAgent(
@@ -1285,7 +1288,7 @@ class SourceCollectorTests(unittest.TestCase):
             )
             snapshot_path = snapshots.write_snapshot(
                 "FPSC",
-                "2026-06-24T08:00:00Z",
+                _snapshot_timestamp(hours_ago=1),
                 [],
             )
             agent = GovernmentJobsAgent(
@@ -1400,7 +1403,7 @@ class SourceCollectorTests(unittest.TestCase):
                 data_directory / "cache" / "government_jobs"
             ).write_snapshot(
                 "FPSC",
-                "2026-06-23T08:00:00Z",
+                _snapshot_timestamp(hours_ago=1),
                 [_cached_government_record()],
             )
             runner = TaskRunner(data_directory)
