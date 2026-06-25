@@ -11,7 +11,9 @@ abstract final class AppConfig {
 
   static const githubRawBaseUrl = String.fromEnvironment(
     'GITHUB_RAW_BASE_URL',
-    defaultValue: '',
+    defaultValue:
+        'https://raw.githubusercontent.com/Shoaib-Ayub/'
+        'career-client-agent/main/backend_agent/data',
   );
 
   static bool get remoteJsonEnabled =>

@@ -8,19 +8,19 @@ Riverpod/MVVM architecture, Hive offline caching, and GitHub Raw JSON sync.
 The production GitHub Raw base URL is:
 
 ```text
-https://raw.githubusercontent.com/Shoaib-Ayub/career_client_agent/main/backend_agent/data
+https://raw.githubusercontent.com/Shoaib-Ayub/career-client-agent/main/backend_agent/data
 ```
 
 Build an APK connected to the daily GitHub data:
 
 ```powershell
-flutter build apk --release --dart-define=GITHUB_RAW_BASE_URL=https://raw.githubusercontent.com/Shoaib-Ayub/career_client_agent/main/backend_agent/data
+flutter build apk --release --dart-define=GITHUB_RAW_BASE_URL=https://raw.githubusercontent.com/Shoaib-Ayub/career-client-agent/main/backend_agent/data
 ```
 
 For smaller per-architecture APKs:
 
 ```powershell
-flutter build apk --release --split-per-abi --dart-define=GITHUB_RAW_BASE_URL=https://raw.githubusercontent.com/Shoaib-Ayub/career_client_agent/main/backend_agent/data
+flutter build apk --release --split-per-abi --dart-define=GITHUB_RAW_BASE_URL=https://raw.githubusercontent.com/Shoaib-Ayub/career-client-agent/main/backend_agent/data
 ```
 
 The app falls back in this order:

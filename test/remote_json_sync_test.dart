@@ -1,8 +1,11 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:career_client_agent/core/constants/app_constants.dart';
+import 'package:career_client_agent/core/constants/app_strings.dart';
 import 'package:career_client_agent/core/data/latest_json_asset_loader.dart';
 import 'package:career_client_agent/core/data/remote_json_data_source.dart';
+import 'package:career_client_agent/core/network/network_exception.dart';
 import 'package:career_client_agent/core/storage/local_storage_service.dart';
 import 'package:career_client_agent/core/storage/models/job_model.dart';
 import 'package:career_client_agent/core/storage/repository_providers.dart';
@@ -52,6 +55,106 @@ void main() {
     expect(records.single['title'], 'Remote Flutter Job');
   });
 
+  test('remote JSON rejects invalid JSON', () async {
+    final source = _remoteWithResponse('not-json', 200);
+
+    await expectLater(
+      source.loadList('jobs/latest.json'),
+      throwsA(
+        isA<NetworkException>().having(
+          (error) => error.message,
+          'message',
+          AppStrings.invalidResponseMessage,
+        ),
+      ),
+    );
+  });
+
+  test('remote JSON reports missing files and HTTP 404', () async {
+    final source = _remoteWithResponse('missing', 404);
+
+    await expectLater(
+      source.loadList('jobs/latest.json'),
+      throwsA(
+        isA<NetworkException>()
+            .having((error) => error.statusCode, 'statusCode', 404)
+            .having(
+              (error) => error.message,
+              'message',
+              AppStrings.remoteFileMissing,
+            ),
+      ),
+    );
+  });
+
+  test('remote JSON reports GitHub HTTP 429 rate limits', () async {
+    final source = _remoteWithResponse('limited', 429);
+
+    await expectLater(
+      source.loadList('jobs/latest.json'),
+      throwsA(
+        isA<NetworkException>()
+            .having((error) => error.statusCode, 'statusCode', 429)
+            .having(
+              (error) => error.message,
+              'message',
+              AppStrings.githubRateLimitMessage,
+            ),
+      ),
+    );
+  });
+
+  test('remote JSON reports timeouts', () async {
+    final source = RemoteJsonDataSource(
+      baseUrl: 'https://raw.example/data',
+      client: MockClient((request) => throw TimeoutException('timeout')),
+    );
+
+    await expectLater(
+      source.loadList('jobs/latest.json'),
+      throwsA(
+        isA<NetworkException>().having(
+          (error) => error.message,
+          'message',
+          AppStrings.requestTimeoutMessage,
+        ),
+      ),
+    );
+  });
+
+  test('remote JSON reports no internet', () async {
+    final source = RemoteJsonDataSource(
+      baseUrl: 'https://raw.example/data',
+      client: MockClient((request) => throw const SocketException('offline')),
+    );
+
+    await expectLater(
+      source.loadList('jobs/latest.json'),
+      throwsA(
+        isA<NetworkException>().having(
+          (error) => error.message,
+          'message',
+          AppStrings.networkErrorMessage,
+        ),
+      ),
+    );
+  });
+
+  test('remote JSON rejects an empty list', () async {
+    final source = _remoteWithResponse('[]', 200);
+
+    await expectLater(
+      source.loadList('jobs/latest.json'),
+      throwsA(
+        isA<NetworkException>().having(
+          (error) => error.message,
+          'message',
+          AppStrings.emptyRemoteDataMessage,
+        ),
+      ),
+    );
+  });
+
   test('repository caches records downloaded from remote JSON', () async {
     final repository = JobsRepository(
       const LocalStorageService(),
@@ -96,6 +199,22 @@ void main() {
     expect(results, hasLength(1));
     expect(results.single.title, _cachedJob.title);
     expect(repository.lastSourceUsed, AppConstants.dataSourceHiveCache);
+    expect(repository.lastError, isNotNull);
+  });
+
+  test('repository falls back to bundled assets when Hive is empty', () async {
+    final repository = JobsRepository(
+      const LocalStorageService(),
+      jsonDataSource: JobsJsonDataSource(
+        LatestJsonAssetLoader(),
+        remote: _remoteWithResponse('missing', 404),
+      ),
+    );
+
+    final results = await repository.fetchLatest();
+
+    expect(results, isNotEmpty);
+    expect(repository.lastSourceUsed, AppConstants.dataSourceBundledAssets);
     expect(repository.lastError, isNotNull);
   });
 
@@ -168,6 +287,13 @@ void main() {
       expect(status.lastSyncedAt, isNotNull);
       expect(status.lastError, isNull);
     },
+  );
+}
+
+RemoteJsonDataSource _remoteWithResponse(String body, int statusCode) {
+  return RemoteJsonDataSource(
+    baseUrl: 'https://raw.example/data',
+    client: MockClient((request) async => http.Response(body, statusCode)),
   );
 }
 
