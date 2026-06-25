@@ -1,6 +1,11 @@
 name: Daily Career Agent
 
 on:
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - "backend_agent/data/**"
   schedule:
     # GitHub Actions cron uses UTC. 03:00 UTC = 08:00 Pakistan time (UTC+5).
     - cron: "0 3 * * *"
