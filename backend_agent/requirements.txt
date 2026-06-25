@@ -1,0 +1,3 @@
+# Public HTTP, JSON, RSS, and XML parsing use the Python standard library.
+# pypdf extracts text from official PPSC/FPSC advertisement PDFs.
+pypdf>=5.0,<7.0

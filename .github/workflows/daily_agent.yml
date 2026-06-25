@@ -1,0 +1,71 @@
+name: Daily Career Agent
+
+on:
+  schedule:
+    # GitHub Actions cron uses UTC. 03:00 UTC = 08:00 Pakistan time (UTC+5).
+    - cron: "0 3 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: daily-career-agent
+  cancel-in-progress: false
+
+jobs:
+  run-agent:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+          cache: pip
+          cache-dependency-path: backend_agent/requirements.txt
+
+      - name: Install backend requirements
+        run: python -m pip install --requirement backend_agent/requirements.txt
+
+      - name: Run Python syntax checks
+        run: |
+          python -m compileall -q backend_agent
+          python -c "import backend_agent.main; import backend_agent.task_runner"
+          python -m unittest discover -s backend_agent/tests -v
+
+      - name: Validate backend input JSON
+        run: |
+          python -m json.tool backend_agent/data/search_tasks.json > /dev/null
+          python -m json.tool backend_agent/data/profile.json > /dev/null
+
+      - name: Run active search agents
+        run: python -m backend_agent.main
+
+      - name: Publish stable latest JSON files
+        run: python -m backend_agent.publish_latest
+
+      - name: Validate generated JSON
+        run: |
+          find backend_agent/data -type f -name "*.json" -print0 |
+            xargs -0 -n1 python -m json.tool > /dev/null
+
+      - name: Commit generated results
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add backend_agent/data
+
+          if git diff --cached --quiet; then
+            echo "No generated data changes to commit."
+            exit 0
+          fi
+
+          git commit -m "chore(agent): update daily opportunity results"
+          git push

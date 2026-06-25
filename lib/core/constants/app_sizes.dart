@@ -1,0 +1,55 @@
+abstract final class AppSizes {
+  static const bottomNavigationLabelMaxLines = 1;
+  static const zero = 0.0;
+  static const spaceXs = 8.0;
+  static const spaceSm = 12.0;
+  static const spaceMd = 16.0;
+  static const spaceLg = 24.0;
+  static const spaceXl = 32.0;
+  static const spaceXxl = 48.0;
+
+  static const cardRadius = 20.0;
+  static const badgeRadius = 999.0;
+  static const cardElevation = 0.0;
+  static const appBarScrolledElevation = 1.0;
+  static const borderWidth = 1.0;
+
+  static const splashLogoMaxWidth = 420.0;
+  static const splashLogoMaxHeight = 430.0;
+  static const splashProgressSize = 24.0;
+  static const splashProgressStrokeWidth = 3.0;
+  static const refreshProgressSize = 18.0;
+  static const refreshProgressStrokeWidth = 2.0;
+  static const featureIconSize = 56.0;
+  static const dashboardIconSize = 32.0;
+  static const dashboardCardMinHeight = 180.0;
+  static const dashboardGridBreakpoint = 700.0;
+  static const dashboardWideGridBreakpoint = 1000.0;
+  static const contentMaxWidth = 1100.0;
+  static const bottomNavigationHeight = 84.0;
+  static const bottomNavigationIconSize = 24.0;
+  static const bottomNavigationIndicatorSize = 44.0;
+  static const drawerHeaderIconSize = 48.0;
+  static const profileAvatarSize = 64.0;
+  static const profileAvatarRadius = 32.0;
+  static const cvIconSize = 40.0;
+  static const recommendationIconSize = 24.0;
+  static const formFieldMinLines = 1;
+  static const formFieldMaxLines = 3;
+  static const matchProgressHeight = 8.0;
+  static const profileSectionMaxWidth = 850.0;
+  static const taskFormMaxWidth = 720.0;
+  static const taskCardIconSize = 32.0;
+  static const opportunityCardMaxWidth = 900.0;
+  static const settingsMaxWidth = 760.0;
+  static const settingsSliderDivisions = 10;
+  static const deadlineSliderDivisions = 13;
+  static const settingsOptionIconSize = 24.0;
+  static const statusMetricIconSize = 28.0;
+  static const statusBadgeHorizontalPadding = 10.0;
+  static const statusBadgeVerticalPadding = 6.0;
+  static const emptyStateIconSize = 56.0;
+  static const summaryIconContainerSize = 44.0;
+  static const matchBadgeHorizontalPadding = 10.0;
+  static const matchBadgeVerticalPadding = 6.0;
+}

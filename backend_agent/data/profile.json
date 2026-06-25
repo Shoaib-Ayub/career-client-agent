@@ -1,0 +1,18 @@
+{
+  "skills": ["Flutter", "Dart", "Python", "Computer Vision", "YOLO", "Roboflow"],
+  "education": "BS Software Engineering",
+  "location": "Pakistan",
+  "preferred_countries": [
+    "Pakistan",
+    "Germany",
+    "United Arab Emirates",
+    "Saudi Arabia",
+    "Qatar",
+    "United Kingdom",
+    "Canada",
+    "Australia",
+    "Singapore",
+    "Malaysia"
+  ],
+  "preferred_job_types": ["Full-time", "Remote"]
+}
