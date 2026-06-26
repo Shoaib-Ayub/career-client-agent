@@ -7,8 +7,10 @@ on:
     paths-ignore:
       - "backend_agent/data/**"
   schedule:
-    # GitHub Actions cron uses UTC. 03:00 UTC = 08:00 Pakistan time (UTC+5).
-    - cron: "0 3 * * *"
+    # GitHub Actions cron uses UTC. Pakistan time is UTC+5.
+    - cron: "0 21 * * *" # 02:00 AM Pakistan time
+    - cron: "0 4 * * *" # 09:00 AM Pakistan time
+    - cron: "0 8 * * *" # 01:00 PM Pakistan time
   workflow_dispatch:
 
 permissions:
