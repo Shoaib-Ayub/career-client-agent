@@ -12,6 +12,8 @@ class SyncStatusModel implements LocalModel {
     required this.totalClientLeads,
     required this.failedSources,
     required this.autoRefreshOnLaunch,
+    required this.personalizedResultsEnabled,
+    required this.strictMatchEnabled,
     required this.refreshIntervalHours,
     required this.syncStatus,
     required this.sourceUsed,
@@ -30,6 +32,8 @@ class SyncStatusModel implements LocalModel {
   final int totalClientLeads;
   final List<String> failedSources;
   final bool autoRefreshOnLaunch;
+  final bool personalizedResultsEnabled;
+  final bool strictMatchEnabled;
   final int refreshIntervalHours;
   final String syncStatus;
   final String sourceUsed;
@@ -46,6 +50,8 @@ class SyncStatusModel implements LocalModel {
       totalClientLeads: status.totalClientLeads,
       failedSources: status.failedSources,
       autoRefreshOnLaunch: status.autoRefreshOnLaunch,
+      personalizedResultsEnabled: status.personalizedResultsEnabled,
+      strictMatchEnabled: status.strictMatchEnabled,
       refreshIntervalHours: status.refreshIntervalHours,
       syncStatus: status.syncStatus,
       sourceUsed: status.sourceUsed,
@@ -66,6 +72,13 @@ class SyncStatusModel implements LocalModel {
         map['failedSources'] as List? ?? const [],
       ),
       autoRefreshOnLaunch: (map['autoRefreshOnLaunch'] ?? false) as bool,
+      personalizedResultsEnabled:
+          (map['personalizedResultsEnabled'] ??
+                  AppConstants.defaultPersonalizedResultsEnabled)
+              as bool,
+      strictMatchEnabled:
+          (map['strictMatchEnabled'] ?? AppConstants.defaultStrictMatchEnabled)
+              as bool,
       refreshIntervalHours:
           (map['refreshIntervalHours'] ??
                   AppConstants.defaultRefreshIntervalHours)
@@ -88,6 +101,8 @@ class SyncStatusModel implements LocalModel {
     totalClientLeads: totalClientLeads,
     failedSources: failedSources,
     autoRefreshOnLaunch: autoRefreshOnLaunch,
+    personalizedResultsEnabled: personalizedResultsEnabled,
+    strictMatchEnabled: strictMatchEnabled,
     refreshIntervalHours: refreshIntervalHours,
     syncStatus: syncStatus,
     sourceUsed: sourceUsed,
@@ -105,6 +120,8 @@ class SyncStatusModel implements LocalModel {
     'totalClientLeads': totalClientLeads,
     'failedSources': failedSources,
     'autoRefreshOnLaunch': autoRefreshOnLaunch,
+    'personalizedResultsEnabled': personalizedResultsEnabled,
+    'strictMatchEnabled': strictMatchEnabled,
     'refreshIntervalHours': refreshIntervalHours,
     'syncStatus': syncStatus,
     'sourceUsed': sourceUsed,

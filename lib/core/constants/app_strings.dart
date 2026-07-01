@@ -367,6 +367,12 @@ abstract final class AppStrings {
   static const autoRefreshOnLaunch = 'Auto refresh on launch';
   static const autoRefreshOnLaunchDescription =
       'Sync when saved data is older than the selected interval.';
+  static const personalizedResults = 'Personalized results';
+  static const personalizedResultsDescription =
+      'Rank opportunities using your saved profile and active search tasks.';
+  static const strictMatch = 'Strict match';
+  static const strictMatchDescription =
+      'Hide weak matches instead of only ranking them lower.';
   static const refreshInterval = 'Refresh interval';
   static const clearCacheTitle = 'Clear local cache?';
   static const clearCacheConfirmation =

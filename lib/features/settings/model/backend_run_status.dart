@@ -10,6 +10,9 @@ class BackendRunStatus {
     this.totalClientLeads = 0,
     this.failedSources = const [],
     this.autoRefreshOnLaunch = false,
+    this.personalizedResultsEnabled =
+        AppConstants.defaultPersonalizedResultsEnabled,
+    this.strictMatchEnabled = AppConstants.defaultStrictMatchEnabled,
     this.refreshIntervalHours = AppConstants.defaultRefreshIntervalHours,
     this.syncStatus = AppConstants.syncStatusSuccess,
     this.sourceUsed = AppConstants.dataSourceUnknown,
@@ -25,6 +28,8 @@ class BackendRunStatus {
   final int totalClientLeads;
   final List<String> failedSources;
   final bool autoRefreshOnLaunch;
+  final bool personalizedResultsEnabled;
+  final bool strictMatchEnabled;
   final int refreshIntervalHours;
   final String syncStatus;
   final String sourceUsed;
@@ -46,6 +51,8 @@ class BackendRunStatus {
     int? totalClientLeads,
     List<String>? failedSources,
     bool? autoRefreshOnLaunch,
+    bool? personalizedResultsEnabled,
+    bool? strictMatchEnabled,
     int? refreshIntervalHours,
     String? syncStatus,
     String? sourceUsed,
@@ -62,6 +69,9 @@ class BackendRunStatus {
       totalClientLeads: totalClientLeads ?? this.totalClientLeads,
       failedSources: failedSources ?? this.failedSources,
       autoRefreshOnLaunch: autoRefreshOnLaunch ?? this.autoRefreshOnLaunch,
+      personalizedResultsEnabled:
+          personalizedResultsEnabled ?? this.personalizedResultsEnabled,
+      strictMatchEnabled: strictMatchEnabled ?? this.strictMatchEnabled,
       refreshIntervalHours: refreshIntervalHours ?? this.refreshIntervalHours,
       syncStatus: syncStatus ?? this.syncStatus,
       sourceUsed: sourceUsed ?? this.sourceUsed,

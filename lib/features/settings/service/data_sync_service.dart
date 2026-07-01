@@ -58,6 +58,8 @@ class DataSyncService {
       totalGovernmentJobs: governmentJobs.length,
       totalClientLeads: clientLeads.length,
       autoRefreshOnLaunch: current.autoRefreshOnLaunch,
+      personalizedResultsEnabled: current.personalizedResultsEnabled,
+      strictMatchEnabled: current.strictMatchEnabled,
       refreshIntervalHours: current.refreshIntervalHours,
       syncStatus: AppConstants.syncStatusSuccess,
       sourceUsed: AppConfig.apiEnabled

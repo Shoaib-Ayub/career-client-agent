@@ -108,6 +108,34 @@ class DataRefreshSettingsScreen extends ConsumerWidget {
                                 .setAutoRefresh,
                           ),
                           const Divider(),
+                          SwitchListTile(
+                            contentPadding: EdgeInsets.zero,
+                            secondary: const Icon(AppIcons.searchTasks),
+                            title: const Text(AppStrings.personalizedResults),
+                            subtitle: const Text(
+                              AppStrings.personalizedResultsDescription,
+                            ),
+                            value: state.status.personalizedResultsEnabled,
+                            onChanged: ref
+                                .read(dataSyncViewModelProvider.notifier)
+                                .setPersonalizedResults,
+                          ),
+                          const Divider(),
+                          SwitchListTile(
+                            contentPadding: EdgeInsets.zero,
+                            secondary: const Icon(AppIcons.match),
+                            title: const Text(AppStrings.strictMatch),
+                            subtitle: const Text(
+                              AppStrings.strictMatchDescription,
+                            ),
+                            value: state.status.strictMatchEnabled,
+                            onChanged: state.status.personalizedResultsEnabled
+                                ? ref
+                                      .read(dataSyncViewModelProvider.notifier)
+                                      .setStrictMatch
+                                : null,
+                          ),
+                          const Divider(),
                           DropdownButtonFormField<int>(
                             initialValue: state.status.refreshIntervalHours,
                             decoration: const InputDecoration(

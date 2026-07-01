@@ -72,6 +72,28 @@ class DataSyncViewModel extends AsyncNotifier<SyncState> {
     state = AsyncData(current.copyWith(status: status));
   }
 
+  Future<void> setPersonalizedResults(bool value) async {
+    final current = state.value;
+    if (current == null) {
+      return;
+    }
+    final status = current.status.copyWith(personalizedResultsEnabled: value);
+    await ref.read(syncStatusRepositoryProvider).saveStatus(status);
+    state = AsyncData(current.copyWith(status: status));
+    _invalidateOpportunityViews();
+  }
+
+  Future<void> setStrictMatch(bool value) async {
+    final current = state.value;
+    if (current == null) {
+      return;
+    }
+    final status = current.status.copyWith(strictMatchEnabled: value);
+    await ref.read(syncStatusRepositoryProvider).saveStatus(status);
+    state = AsyncData(current.copyWith(status: status));
+    _invalidateOpportunityViews();
+  }
+
   Future<void> setRefreshInterval(int hours) async {
     final current = state.value;
     if (current == null) {

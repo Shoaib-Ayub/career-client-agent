@@ -54,6 +54,8 @@ abstract final class AppConstants {
   static const syncStatusRecordId = 'latest_sync';
   static const backendRunStatusAsset = 'backend_agent/data/run_status.json';
   static const defaultRefreshIntervalHours = 24;
+  static const defaultPersonalizedResultsEnabled = true;
+  static const defaultStrictMatchEnabled = false;
   static const refreshIntervalOptions = <int>[6, 12, 24, 48];
   static const platformLinksRecordId = 'platform_links';
   static const optimizerProjectLimit = 3;

@@ -3,6 +3,7 @@ import 'package:career_client_agent/core/storage/repository_providers.dart';
 import 'package:career_client_agent/features/opportunities/model/opportunity_filter.dart';
 import 'package:career_client_agent/features/opportunities/model/opportunity_list_state.dart';
 import 'package:career_client_agent/features/opportunities/view_model/opportunity_providers.dart';
+import 'package:career_client_agent/features/search_tasks/model/search_task.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final clientLeadsViewModelProvider =
@@ -17,7 +18,9 @@ class ClientLeadsViewModel
 
   @override
   Future<OpportunityListState<ClientLeadModel>> build() async {
-    _allItems = await ref.read(clientLeadsRepositoryProvider).getAll();
+    _allItems = await _personalize(
+      await ref.read(clientLeadsRepositoryProvider).getAll(),
+    );
     return _stateFor(OpportunityFilter.latest);
   }
 
@@ -34,7 +37,9 @@ class ClientLeadsViewModel
     final filter = current.selectedFilter;
     state = AsyncData(current.copyWith(isRefreshing: true));
     try {
-      _allItems = await ref.read(clientLeadsRepositoryProvider).fetchLatest();
+      _allItems = await _personalize(
+        await ref.read(clientLeadsRepositoryProvider).fetchLatest(),
+      );
       state = AsyncData(_stateFor(filter));
       return true;
     } on Exception {
@@ -48,5 +53,21 @@ class ClientLeadsViewModel
         .read(opportunityFilterServiceProvider)
         .apply(_allItems, filter);
     return OpportunityListState(items: items, selectedFilter: filter);
+  }
+
+  Future<List<ClientLeadModel>> _personalize(
+    List<ClientLeadModel> items,
+  ) async {
+    final status = await ref.read(syncStatusRepositoryProvider).getStatus();
+    return ref
+        .read(personalizationServiceProvider)
+        .personalize(
+          items: items,
+          profile: await ref.read(profileRepositoryProvider).getProfile(),
+          tasks: await ref.read(searchTasksRepositoryProvider).getDomainTasks(),
+          taskType: SearchTaskType.clientLead,
+          enabled: status.personalizedResultsEnabled,
+          strictMatch: status.strictMatchEnabled,
+        );
   }
 }

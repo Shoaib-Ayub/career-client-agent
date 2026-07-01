@@ -8,6 +8,7 @@ import 'package:career_client_agent/features/opportunities/model/opportunity_fil
 import 'package:career_client_agent/features/opportunities/model/opportunity_list_state.dart';
 import 'package:career_client_agent/features/opportunities/view_model/opportunity_providers.dart';
 import 'package:career_client_agent/features/profile/view_model/profile_view_model.dart';
+import 'package:career_client_agent/features/search_tasks/model/search_task.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final jobsViewModelProvider =
@@ -20,7 +21,9 @@ class JobsViewModel extends AsyncNotifier<OpportunityListState<JobModel>> {
 
   @override
   Future<OpportunityListState<JobModel>> build() async {
-    _allItems = await ref.read(jobsRepositoryProvider).getAll();
+    _allItems = await _personalize(
+      await ref.read(jobsRepositoryProvider).getAll(),
+    );
     return _stateFor(OpportunityFilter.latest);
   }
 
@@ -37,7 +40,9 @@ class JobsViewModel extends AsyncNotifier<OpportunityListState<JobModel>> {
     final filter = current.selectedFilter;
     state = AsyncData(current.copyWith(isRefreshing: true));
     try {
-      _allItems = await ref.read(jobsRepositoryProvider).fetchLatest();
+      _allItems = await _personalize(
+        await ref.read(jobsRepositoryProvider).fetchLatest(),
+      );
       state = AsyncData(_stateFor(filter));
       return true;
     } on Exception {
@@ -51,6 +56,20 @@ class JobsViewModel extends AsyncNotifier<OpportunityListState<JobModel>> {
         .read(opportunityFilterServiceProvider)
         .apply(_allItems, filter);
     return OpportunityListState(items: items, selectedFilter: filter);
+  }
+
+  Future<List<JobModel>> _personalize(List<JobModel> items) async {
+    final status = await ref.read(syncStatusRepositoryProvider).getStatus();
+    return ref
+        .read(personalizationServiceProvider)
+        .personalize(
+          items: items,
+          profile: await ref.read(profileRepositoryProvider).getProfile(),
+          tasks: await ref.read(searchTasksRepositoryProvider).getDomainTasks(),
+          taskType: SearchTaskType.job,
+          enabled: status.personalizedResultsEnabled,
+          strictMatch: status.strictMatchEnabled,
+        );
   }
 }
 
