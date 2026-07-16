@@ -14,8 +14,53 @@ class Profile:
     preferred_job_types: list[str] = field(default_factory=list)
 
     @classmethod
-    def from_dict(cls, data: dict[str, object]) -> "Profile":
+    def default(cls) -> "Profile":
+        """Default Shoaib profile used when no user profile is configured."""
+
         return cls(
+            skills=[
+                "Flutter",
+                "Dart",
+                "Firebase",
+                "Python",
+                "AI",
+                "Machine Learning",
+                "Computer Vision",
+                "YOLO",
+                "TensorFlow Lite",
+                "TFLite",
+                "OpenCV",
+                "Roboflow",
+            ],
+            education="BS Software Engineering",
+            location="Pakistan",
+            preferred_countries=[
+                "Pakistan",
+                "Germany",
+                "UAE",
+                "Saudi Arabia",
+                "Qatar",
+                "UK",
+                "Canada",
+                "Australia",
+                "Singapore",
+                "Malaysia",
+                "Remote",
+            ],
+            preferred_job_types=[
+                "Fresher",
+                "Entry Level",
+                "Internship",
+                "Trainee",
+                "Remote",
+                "Full-time",
+                "Freelance",
+            ],
+        )
+
+    @classmethod
+    def from_dict(cls, data: dict[str, object]) -> "Profile":
+        profile = cls(
             skills=[str(value) for value in data.get("skills", [])],
             education=str(data.get("education", "")),
             location=str(data.get("location", "")),
@@ -26,6 +71,21 @@ class Profile:
                 str(value) for value in data.get("preferred_job_types", data.get("preferredJobTypes", []))
             ],
         )
+        return profile.or_default()
+
+    def is_empty(self) -> bool:
+        return not any(
+            [
+                self.skills,
+                self.education.strip(),
+                self.location.strip(),
+                self.preferred_countries,
+                self.preferred_job_types,
+            ]
+        )
+
+    def or_default(self) -> "Profile":
+        return self.default() if self.is_empty() else self
 
 
 class ProfileMatchEngine:

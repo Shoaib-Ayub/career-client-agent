@@ -8,6 +8,7 @@ from backend_agent.services.personalization_service import (
     AgentPersonalizationService,
 )
 from backend_agent.sources.base_source import SourceOpportunity
+from backend_agent.task_runner import TaskRunner
 
 
 class AgentPersonalizationServiceTests(unittest.TestCase):
@@ -96,6 +97,31 @@ class AgentPersonalizationServiceTests(unittest.TestCase):
 
         self.assertEqual(2, len(results))
         self.assertEqual("Assistant Director", results[0].title)
+
+    def test_empty_profile_uses_shoaib_default_profile(self) -> None:
+        profile = Profile().or_default()
+
+        self.assertIn("Flutter", profile.skills)
+        self.assertIn("Computer Vision", profile.skills)
+        self.assertEqual("BS Software Engineering", profile.education)
+        self.assertIn("Remote", profile.preferred_countries)
+
+    def test_empty_task_file_uses_shoaib_default_tasks(self) -> None:
+        tasks = TaskRunner.default_tasks()
+
+        self.assertEqual(
+            {
+                TaskType.JOB,
+                TaskType.SCHOLARSHIP,
+                TaskType.GOVERNMENT_JOB,
+                TaskType.CLIENT_LEAD,
+            },
+            {task.task_type for task in tasks},
+        )
+        self.assertTrue(all(task.is_active for task in tasks))
+        self.assertTrue(
+            any("Flutter Firebase" in task.keywords for task in tasks)
+        )
 
     def _task(
         self,

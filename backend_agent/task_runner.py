@@ -29,7 +29,7 @@ class TaskRunner:
         freshness: str = FreshnessWindow.LAST_7_DAYS,
     ) -> None:
         self.storage = JsonStorage(data_directory)
-        self.profile = profile or Profile()
+        self.profile = (profile or Profile()).or_default()
         self.match_engine = ProfileMatchEngine()
         self.agents = {
             TaskType.JOB: JobsAgent(freshness),
@@ -45,9 +45,138 @@ class TaskRunner:
         }
 
     def load_tasks(self, tasks_path: Path) -> list[SearchTask]:
-        return [
+        tasks = [
             SearchTask.from_dict(payload)
             for payload in self.storage.read_list(tasks_path)
+        ]
+        return tasks or self.default_tasks()
+
+    @staticmethod
+    def default_tasks() -> list[SearchTask]:
+        created_at = "2026-06-19"
+        return [
+            SearchTask(
+                id="default_ai_jobs",
+                title="AI/ML & Computer Vision Fresher Jobs",
+                task_type=TaskType.JOB,
+                keywords=[
+                    "AI",
+                    "Machine Learning",
+                    "Computer Vision",
+                    "Python",
+                    "YOLO",
+                    "Flutter Developer",
+                    "Junior Software Engineer",
+                    "Associate Software Engineer",
+                ],
+                location="Worldwide",
+                level="Fresher",
+                filters=["Entry Level", "Full-time"],
+                daily_limit=10,
+                is_active=True,
+                created_at=created_at,
+            ),
+            SearchTask(
+                id="default_visa_jobs",
+                title="Visa Sponsorship & Relocation Jobs",
+                task_type=TaskType.JOB,
+                keywords=[
+                    "Visa Sponsorship",
+                    "Relocation",
+                    "Flutter",
+                    "AI",
+                    "Machine Learning Engineer",
+                    "Computer Vision Engineer",
+                    "Junior Software Engineer",
+                ],
+                location="Worldwide",
+                level="International",
+                filters=["Visa Sponsorship", "Relocation Assistance"],
+                daily_limit=5,
+                is_active=True,
+                created_at=created_at,
+            ),
+            SearchTask(
+                id="default_ms_scholarships",
+                title="Fully Funded MS Scholarships with Stipend",
+                task_type=TaskType.SCHOLARSHIP,
+                keywords=[
+                    "Fully Funded",
+                    "MS",
+                    "Artificial Intelligence",
+                    "Machine Learning",
+                    "Computer Vision",
+                    "Stipend",
+                ],
+                location="Worldwide",
+                level="MS",
+                filters=["Monthly Stipend", "International Student"],
+                daily_limit=10,
+                is_active=True,
+                created_at=created_at,
+            ),
+            SearchTask(
+                id="default_government_jobs",
+                title="Bachelor-Level Pakistan & Punjab Government Jobs",
+                task_type=TaskType.GOVERNMENT_JOB,
+                keywords=[
+                    "Assistant",
+                    "Officer",
+                    "Inspector",
+                    "Assistant Director",
+                    "Lecturer",
+                    "BS-16",
+                    "BS-17",
+                    "Bachelor",
+                    "Graduation",
+                    "16 years education",
+                    "Punjab domicile",
+                    "Open merit",
+                    "All Pakistan",
+                ],
+                location="Pakistan, Punjab",
+                level="Bachelor / Graduation / 16 years education",
+                filters=[
+                    "PPSC",
+                    "FPSC",
+                    "Punjab Job Portal",
+                    "National Job Portal",
+                    "Government",
+                ],
+                daily_limit=200,
+                is_active=True,
+                created_at=created_at,
+            ),
+            SearchTask(
+                id="default_client_leads",
+                title="CV-Matched Paid Client Projects",
+                task_type=TaskType.CLIENT_LEAD,
+                keywords=[
+                    "Flutter Development",
+                    "Flutter Firebase",
+                    "Flutter AI Integration",
+                    "Mobile AI App",
+                    "AI ML",
+                    "Computer Vision",
+                    "YOLO Object Detection",
+                    "TensorFlow Lite",
+                    "TFLite",
+                ],
+                location="Remote",
+                level="Professional",
+                filters=[
+                    "Flutter Client Project",
+                    "Mobile AI Project",
+                    "Computer Vision Project",
+                    "AI/ML Project",
+                    "TFLite / YOLO Project",
+                    "Freelance",
+                    "Remote",
+                ],
+                daily_limit=5,
+                is_active=True,
+                created_at=created_at,
+            ),
         ]
 
     def run(self, tasks_path: Path) -> list[Path]:
