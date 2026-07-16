@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from .agent_base import BaseOpportunityAgent
 from .models import Job, SearchTask
+from .profile_match_engine import Profile
 from .sources.base_source import FreshnessWindow
 from .sources.base_source import SourceOpportunity
 from .sources.jobs_sources import (
@@ -49,8 +50,16 @@ class JobsAgent(BaseOpportunityAgent[Job]):
     ) -> None:
         super().__init__(job_sources(), freshness)
 
-    def execute(self, task: SearchTask) -> list[Job]:
-        source_items = self.collect_real(task, apply_limit=False)
+    def execute(
+        self,
+        task: SearchTask,
+        profile: Profile | None = None,
+    ) -> list[Job]:
+        source_items = self.collect_real(
+            task,
+            apply_limit=False,
+            profile=profile,
+        )
         for item in source_items:
             finalize_private_job(item)
         source_items = [
@@ -74,6 +83,11 @@ class JobsAgent(BaseOpportunityAgent[Job]):
                 if "pakistan" in item.location.casefold()
             ]
             source_items = sponsored or pakistan or source_items
+        source_items = self.personalization_service.rank_items(
+            source_items,
+            task,
+            profile,
+        )
         source_items = source_items[: task.daily_limit]
         real_results = [
             Job(**self.source_fields(item))

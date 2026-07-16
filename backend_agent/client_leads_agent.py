@@ -4,6 +4,7 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 
 from .agent_base import BaseOpportunityAgent
 from .models import ClientLead, SearchTask
+from .profile_match_engine import Profile
 from .sources.base_source import (
     FreshnessWindow,
     SourceOpportunity,
@@ -39,14 +40,21 @@ class ClientLeadsAgent(BaseOpportunityAgent[ClientLead]):
     ) -> None:
         super().__init__(client_leads_sources(), freshness)
 
-    def execute(self, task: SearchTask) -> list[ClientLead]:
+    def execute(
+        self,
+        task: SearchTask,
+        profile: Profile | None = None,
+    ) -> list[ClientLead]:
         if any(value.casefold() == "github" for value in task.filters):
             self.sources = client_leads_sources(include_github=True)
-        source_items = sorted(
-            self.quality_service.deduplicate_leads(
-                self._collect_sources_concurrently(task)
-            ),
-            key=self._stable_rank_key,
+        source_items = self.quality_service.deduplicate_leads(
+            self._collect_sources_concurrently(task)
+        )
+        source_items = self.personalization_service.rank_items(
+            source_items,
+            task,
+            profile,
+            preserve_all=True,
         )[: task.daily_limit]
         real_results = [
             ClientLead(

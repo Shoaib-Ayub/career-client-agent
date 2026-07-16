@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from .agent_base import BaseOpportunityAgent
 from .models import Scholarship, SearchTask
+from .profile_match_engine import Profile
 from .sources.base_source import FreshnessWindow
 from .sources.scholarship_sources import scholarship_sources
 
@@ -28,10 +29,14 @@ class ScholarshipsAgent(BaseOpportunityAgent[Scholarship]):
     ) -> None:
         super().__init__(scholarship_sources(), freshness)
 
-    def execute(self, task: SearchTask) -> list[Scholarship]:
+    def execute(
+        self,
+        task: SearchTask,
+        profile: Profile | None = None,
+    ) -> list[Scholarship]:
         real_results = [
             Scholarship(**self.source_fields(item))
-            for item in self.collect_real(task)
+            for item in self.collect_real(task, profile=profile)
         ]
         if real_results:
             return real_results

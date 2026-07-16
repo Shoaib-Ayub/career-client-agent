@@ -10,6 +10,7 @@ from time import monotonic
 
 from .agent_base import BaseOpportunityAgent
 from .models import GovernmentJob, SearchTask
+from .profile_match_engine import Profile
 from .storage import GovernmentJobsSnapshotStorage
 from .sources.base_source import (
     FreshnessWindow,
@@ -64,13 +65,23 @@ class GovernmentJobsAgent(BaseOpportunityAgent[GovernmentJob]):
         self.snapshot_health_report: dict[str, dict[str, object]] = {}
         self.health_summary: dict[str, object] = {}
 
-    def execute(self, task: SearchTask) -> list[GovernmentJob]:
+    def execute(
+        self,
+        task: SearchTask,
+        profile: Profile | None = None,
+    ) -> list[GovernmentJob]:
         source_items = self._collect_government_results(task)
         source_items = [
             item
             for item in source_items
             if is_eligible_government_result(item)
         ]
+        source_items = self.personalization_service.rank_items(
+            source_items,
+            task,
+            profile,
+            preserve_all=True,
+        )
         self._write_verified_snapshots(source_items)
         self.snapshot_health_report = self._snapshot_health_report()
         self.health_summary = GovernmentJobsSnapshotStorage.aggregate_health(

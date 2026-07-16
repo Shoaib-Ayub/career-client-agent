@@ -140,4 +140,4 @@ class TaskRunner:
 
     def _execute_task(self, task: SearchTask) -> list[Opportunity]:
         agent = self.agents[task.task_type]
-        return list(agent.execute(task))
+        return list(agent.execute(task, self.profile))

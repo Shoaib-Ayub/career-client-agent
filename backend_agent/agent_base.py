@@ -5,6 +5,8 @@ from datetime import date, timedelta
 from typing import Generic, TypeVar
 
 from .models import Opportunity, SearchTask
+from .profile_match_engine import Profile
+from .services.personalization_service import AgentPersonalizationService
 from .sources.base_source import (
     BaseSource,
     FreshnessWindow,
@@ -31,15 +33,22 @@ class BaseOpportunityAgent(ABC, Generic[OpportunityT]):
         self.failed_sources: list[str] = []
         self.successful_sources: list[str] = []
         self.source_reports: list[dict[str, object]] = []
+        self.personalization_service = AgentPersonalizationService()
 
     @abstractmethod
-    def execute(self, task: SearchTask) -> list[OpportunityT]:
+    def execute(
+        self,
+        task: SearchTask,
+        profile: Profile | None = None,
+    ) -> list[OpportunityT]:
         """Collect results for a search task."""
 
     def collect_real(
         self,
         task: SearchTask,
         apply_limit: bool = True,
+        profile: Profile | None = None,
+        preserve_all: bool = False,
     ) -> list[SourceOpportunity]:
         collected: list[SourceOpportunity] = []
         self.failed_sources = []
@@ -62,6 +71,12 @@ class BaseOpportunityAgent(ABC, Generic[OpportunityT]):
         relevant = [item for item in collected if matches_task(item, task)]
         fresh = filter_fresh(relevant, self.freshness)
         results = sort_newest(deduplicate(fresh))
+        results = self.personalization_service.rank_items(
+            results,
+            task,
+            profile,
+            preserve_all=preserve_all,
+        )
         return results[: task.daily_limit] if apply_limit else results
 
     @staticmethod
