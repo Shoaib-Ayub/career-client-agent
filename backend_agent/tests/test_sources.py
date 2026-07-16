@@ -395,7 +395,10 @@ class SourceCollectorTests(unittest.TestCase):
 
     def test_parses_official_punjab_job_rows(self) -> None:
         source = PunjabJobsPortalSource()
-        source.fetch_text = lambda url: """
+        deadline = datetime.now(timezone.utc) + timedelta(days=30)
+        deadline_label = deadline.strftime("%d-%b-%Y")
+        expected_deadline = deadline.date().isoformat()
+        source.fetch_text = lambda url: f"""
             <tr>
               <td data-label="Job Title"><strong>
                 <a href="https://jobs.punjab.gov.pk/new_recruit/job_detail/junior-software-developer">
@@ -405,7 +408,7 @@ class SourceCollectorTests(unittest.TestCase):
               <td data-label="Department">The Urban Unit</td>
               <td data-label="Project">The Urban Unit</td>
               <td data-label="Province">Punjab, Pakistan</td>
-              <td>07-Jul-2026</td>
+              <td>{deadline_label}</td>
             </tr>
         """
 
@@ -413,24 +416,27 @@ class SourceCollectorTests(unittest.TestCase):
 
         self.assertEqual(len(results), 1)
         self.assertEqual(results[0].organization, "The Urban Unit")
-        self.assertEqual(results[0].deadline, "2026-07-07")
+        self.assertEqual(results[0].deadline, expected_deadline)
         self.assertIn("Software Engineer", results[0].required_skills)
 
     def test_parses_official_national_job_cards(self) -> None:
         source = NationalJobPortalSource()
-        source.fetch_text = lambda url: """
+        deadline = datetime.now(timezone.utc) + timedelta(days=31)
+        deadline_label = deadline.strftime("%b %d, %Y")
+        expected_deadline = deadline.date().isoformat()
+        source.fetch_text = lambda url: f"""
           <!-- Job Card -->
           <div class="job-card">
             <a href="https://www.njp.gov.pk/jobs/9999">Website Developer</a>
             <p><svg></svg> by Ministry of Information Technology, Government of Pakistan</p>
-            <span>Available Till Jul 08, 2026</span>
+            <span>Available Till {deadline_label}</span>
           </div>
         """
 
         results = source.collect(self.task)
 
         self.assertEqual(len(results), 1)
-        self.assertEqual(results[0].deadline, "2026-07-08")
+        self.assertEqual(results[0].deadline, expected_deadline)
         self.assertEqual(results[0].source_name, "National Job Portal Pakistan")
 
     def test_njp_structured_bs_job_is_accepted(self) -> None:
