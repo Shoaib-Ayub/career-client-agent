@@ -1,6 +1,6 @@
 {
   "source_name": "National Job Portal Pakistan",
-  "generated_at": "2026-07-22T06:28:54.554051Z",
+  "generated_at": "2026-07-22T10:31:04.912590Z",
   "record_count": 6,
   "records": [
     {
@@ -367,7 +367,7 @@
       "source_name": "National Job Portal Pakistan",
       "found_at": "",
       "freshness_status": "unknown",
-      "required_education": "BS Computer Science (BSCS) BS Information Technology (BSIT) MSc Computer Science MS Computer Science (MSCS) MS Information Technology (MSIT) PhD in Information Technology PhD in Computer Science MS Management Sciences MS Project Management MSc Management Sciences MPhil Project Management MSc Information Technology PhD in Management Sciences PhD in Management Sciences (Marketing) PhD in Management Sciences (Public Administration) MSc Project Management PhD in Project Management BS Management Sciences MSc Information Technology Management PhD in Management Sciences (Finance) MS Computer and Information Technology BS (Project Management) Read More",
+      "required_education": "BS Computer Science (BSCS) BS Information Technology (BSIT) MSc Computer Science MS Computer Science (MSCS) MS Information Technology (MSIT) PhD in Information Technology PhD in Computer Science MS Management Sciences MS Project Management MSc Management Sciences MPhil Project Management MSc Information Technology PhD in Management Sciences PhD in Management Sciences (Marketing) PhD in Management Sciences (Public Administration) MSc Project Management PhD in Project Management BS Management Sciences MSc Information Technology Management Master of Information Technology- MIT PhD in Management Sciences (Finance) MS Computer and Information Technology BS (Project Management) Read More",
       "eligibility_domicile": "All Pakistan",
       "age_limit": "50 years",
       "advertisement_link": "",
@@ -407,8 +407,8 @@
       ],
       "department": "National IT Board(NITB)",
       "province_city": "Pakistan",
-      "qualification": "BS Computer Science (BSCS) BS Information Technology (BSIT) MSc Computer Science MS Computer Science (MSCS) MS Information Technology (MSIT) PhD in Information Technology PhD in Computer Science MS Management Sciences MS Project Management MSc Management Sciences MPhil Project Management MSc Information Technology PhD in Management Sciences PhD in Management Sciences (Marketing) PhD in Management Sciences (Public Administration) MSc Project Management PhD in Project Management BS Management Sciences MSc Information Technology Management PhD in Management Sciences (Finance) MS Computer and Information Technology BS (Project Management) Read More",
-      "qualification_required": "BS Computer Science (BSCS) BS Information Technology (BSIT) MSc Computer Science MS Computer Science (MSCS) MS Information Technology (MSIT) PhD in Information Technology PhD in Computer Science MS Management Sciences MS Project Management MSc Management Sciences MPhil Project Management MSc Information Technology PhD in Management Sciences PhD in Management Sciences (Marketing) PhD in Management Sciences (Public Administration) MSc Project Management PhD in Project Management BS Management Sciences MSc Information Technology Management PhD in Management Sciences (Finance) MS Computer and Information Technology BS (Project Management) Read More",
+      "qualification": "BS Computer Science (BSCS) BS Information Technology (BSIT) MSc Computer Science MS Computer Science (MSCS) MS Information Technology (MSIT) PhD in Information Technology PhD in Computer Science MS Management Sciences MS Project Management MSc Management Sciences MPhil Project Management MSc Information Technology PhD in Management Sciences PhD in Management Sciences (Marketing) PhD in Management Sciences (Public Administration) MSc Project Management PhD in Project Management BS Management Sciences MSc Information Technology Management Master of Information Technology- MIT PhD in Management Sciences (Finance) MS Computer and Information Technology BS (Project Management) Read More",
+      "qualification_required": "BS Computer Science (BSCS) BS Information Technology (BSIT) MSc Computer Science MS Computer Science (MSCS) MS Information Technology (MSIT) PhD in Information Technology PhD in Computer Science MS Management Sciences MS Project Management MSc Management Sciences MPhil Project Management MSc Information Technology PhD in Management Sciences PhD in Management Sciences (Marketing) PhD in Management Sciences (Public Administration) MSc Project Management PhD in Project Management BS Management Sciences MSc Information Technology Management Master of Information Technology- MIT PhD in Management Sciences (Finance) MS Computer and Information Technology BS (Project Management) Read More",
       "domicile_required": "All Pakistan",
       "province_eligibility": "Yes",
       "application_deadline": "2026-07-29",
