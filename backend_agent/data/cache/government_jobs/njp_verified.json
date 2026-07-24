@@ -1,6 +1,6 @@
 {
   "source_name": "National Job Portal Pakistan",
-  "generated_at": "2026-07-24T10:24:55.594446Z",
+  "generated_at": "2026-07-24T22:02:24.434669Z",
   "record_count": 15,
   "records": [
     {
@@ -22,7 +22,7 @@
       "source_name": "National Job Portal Pakistan",
       "found_at": "",
       "freshness_status": "unknown",
-      "required_education": "BS Computer Science (BSCS) BS Information Technology (BSIT) MSc Computer Science MS Computer Science (MSCS) MS Information Technology (MSIT) PhD in Information Technology PhD in Computer Science Master of Computer Science (MCS) BE Computer Science BE Information Technology MSc Information Technology BSc Computer Science MPhil Computer Science BA(IT) MPhil Information Technology Master of Engineering (Information Technology) Bachelor in Computer Science (BCS 2 years) MSc Information Technology Management Master of Information Technology- MIT Bachelor of Arts - Information Technology - BA(IT) Bachelors of Business and Information Technology (BBIT) MS Computer and Information Technology Bachelors of Computer Science Read More",
+      "required_education": "BS Computer Science (BSCS) BS Software Engineering BS Information Technology (BSIT) MSc Computer Science MS Computer Science (MSCS) MS Information Technology (MSIT) PhD in Information Technology PhD in Computer Science Master of Computer Science (MCS) BE Computer Science BE Information Technology MSc Information Technology BSc Computer Science BE Software Engineering MPhil Computer Science BA(IT) MPhil Information Technology Master of Engineering (Information Technology) Bachelor in Computer Science (BCS 2 years) MSc Information Technology Management Master of Information Technology- MIT Bachelor of Arts - Information Technology - BA(IT) Bachelors of Business and Information Technology (BBIT) MS Computer and Information Technology Bachelors of Computer Science Read More",
       "eligibility_domicile": "All Pakistan",
       "age_limit": "45 years",
       "advertisement_link": "",
@@ -63,8 +63,8 @@
       ],
       "department": "National IT Board(NITB)",
       "province_city": "Pakistan",
-      "qualification": "BS Computer Science (BSCS) BS Information Technology (BSIT) MSc Computer Science MS Computer Science (MSCS) MS Information Technology (MSIT) PhD in Information Technology PhD in Computer Science Master of Computer Science (MCS) BE Computer Science BE Information Technology MSc Information Technology BSc Computer Science MPhil Computer Science BA(IT) MPhil Information Technology Master of Engineering (Information Technology) Bachelor in Computer Science (BCS 2 years) MSc Information Technology Management Master of Information Technology- MIT Bachelor of Arts - Information Technology - BA(IT) Bachelors of Business and Information Technology (BBIT) MS Computer and Information Technology Bachelors of Computer Science Read More",
-      "qualification_required": "BS Computer Science (BSCS) BS Information Technology (BSIT) MSc Computer Science MS Computer Science (MSCS) MS Information Technology (MSIT) PhD in Information Technology PhD in Computer Science Master of Computer Science (MCS) BE Computer Science BE Information Technology MSc Information Technology BSc Computer Science MPhil Computer Science BA(IT) MPhil Information Technology Master of Engineering (Information Technology) Bachelor in Computer Science (BCS 2 years) MSc Information Technology Management Master of Information Technology- MIT Bachelor of Arts - Information Technology - BA(IT) Bachelors of Business and Information Technology (BBIT) MS Computer and Information Technology Bachelors of Computer Science Read More",
+      "qualification": "BS Computer Science (BSCS) BS Software Engineering BS Information Technology (BSIT) MSc Computer Science MS Computer Science (MSCS) MS Information Technology (MSIT) PhD in Information Technology PhD in Computer Science Master of Computer Science (MCS) BE Computer Science BE Information Technology MSc Information Technology BSc Computer Science BE Software Engineering MPhil Computer Science BA(IT) MPhil Information Technology Master of Engineering (Information Technology) Bachelor in Computer Science (BCS 2 years) MSc Information Technology Management Master of Information Technology- MIT Bachelor of Arts - Information Technology - BA(IT) Bachelors of Business and Information Technology (BBIT) MS Computer and Information Technology Bachelors of Computer Science Read More",
+      "qualification_required": "BS Computer Science (BSCS) BS Software Engineering BS Information Technology (BSIT) MSc Computer Science MS Computer Science (MSCS) MS Information Technology (MSIT) PhD in Information Technology PhD in Computer Science Master of Computer Science (MCS) BE Computer Science BE Information Technology MSc Information Technology BSc Computer Science BE Software Engineering MPhil Computer Science BA(IT) MPhil Information Technology Master of Engineering (Information Technology) Bachelor in Computer Science (BCS 2 years) MSc Information Technology Management Master of Information Technology- MIT Bachelor of Arts - Information Technology - BA(IT) Bachelors of Business and Information Technology (BBIT) MS Computer and Information Technology Bachelors of Computer Science Read More",
       "domicile_required": "All Pakistan",
       "province_eligibility": "Yes",
       "application_deadline": "2026-07-29",
