@@ -1,8 +1,8 @@
 {
-  "last_run_time": "2026-07-23T22:01:32.512429Z",
+  "last_run_time": "2026-07-24T06:26:04.620484Z",
   "total_jobs": 15,
   "total_scholarships": 10,
-  "total_government_jobs": 15,
+  "total_government_jobs": 16,
   "total_client_leads": 5,
   "failed_sources": [
     "FPSC",
@@ -160,7 +160,7 @@
     {
       "source_name": "WAPDA Careers",
       "status": "failed",
-      "failure_reason": "WAPDA Careers request failed: The read operation timed out",
+      "failure_reason": "WAPDA Careers request failed: HTTP Error 404: Not Found",
       "fallback_used": false,
       "cached_records_used": 0,
       "cache_snapshot_used": false,
@@ -174,25 +174,25 @@
     }
   ],
   "government_jobs_diversity": {
-    "total_results": 15,
+    "total_results": 16,
     "source_count": 2,
     "department_count": 3,
     "results_by_source": {
-      "National Job Portal Pakistan": 14,
+      "National Job Portal Pakistan": 15,
       "Pakistan Jobs Bank": 1
     },
     "results_by_department": {
       "Ministry of Information Technology and Telecommunication (MOITT)": 1,
-      "National IT Board(NITB)": 13,
+      "National IT Board(NITB)": 14,
       "Pakistan Petroleum Limited": 1
     },
     "it_development_count": 3,
-    "non_it_count": 12
+    "non_it_count": 13
   },
   "government_jobs_snapshot_health": {
     "ASF Careers": {
       "snapshot_exists": true,
-      "snapshot_generated_at": "2026-07-23T22:02:29.420639Z",
+      "snapshot_generated_at": "2026-07-24T06:26:58.378845Z",
       "snapshot_age_hours": 0.0,
       "snapshot_record_count": 0,
       "snapshot_health": "empty",
@@ -200,7 +200,7 @@
     },
     "FBR Careers": {
       "snapshot_exists": true,
-      "snapshot_generated_at": "2026-07-23T22:02:29.420639Z",
+      "snapshot_generated_at": "2026-07-24T06:26:58.378845Z",
       "snapshot_age_hours": 0.0,
       "snapshot_record_count": 0,
       "snapshot_health": "empty",
@@ -208,7 +208,7 @@
     },
     "FIA Careers": {
       "snapshot_exists": true,
-      "snapshot_generated_at": "2026-07-23T22:02:29.420639Z",
+      "snapshot_generated_at": "2026-07-24T06:26:58.378845Z",
       "snapshot_age_hours": 0.0,
       "snapshot_record_count": 0,
       "snapshot_health": "empty",
@@ -232,7 +232,7 @@
     },
     "Government College University Lahore": {
       "snapshot_exists": true,
-      "snapshot_generated_at": "2026-07-23T22:02:29.420639Z",
+      "snapshot_generated_at": "2026-07-24T06:26:58.378845Z",
       "snapshot_age_hours": 0.0,
       "snapshot_record_count": 0,
       "snapshot_health": "empty",
@@ -248,7 +248,7 @@
     },
     "Ministry of IT & Telecom": {
       "snapshot_exists": true,
-      "snapshot_generated_at": "2026-07-23T22:02:29.420639Z",
+      "snapshot_generated_at": "2026-07-24T06:26:58.378845Z",
       "snapshot_age_hours": 0.0,
       "snapshot_record_count": 0,
       "snapshot_health": "empty",
@@ -256,7 +256,7 @@
     },
     "NAB Careers": {
       "snapshot_exists": true,
-      "snapshot_generated_at": "2026-07-23T22:02:29.420639Z",
+      "snapshot_generated_at": "2026-07-24T06:26:58.378845Z",
       "snapshot_age_hours": 0.0,
       "snapshot_record_count": 0,
       "snapshot_health": "empty",
@@ -272,7 +272,7 @@
     },
     "NTS": {
       "snapshot_exists": true,
-      "snapshot_generated_at": "2026-07-23T22:02:29.420639Z",
+      "snapshot_generated_at": "2026-07-24T06:26:58.378845Z",
       "snapshot_age_hours": 0.0,
       "snapshot_record_count": 0,
       "snapshot_health": "empty",
@@ -280,7 +280,7 @@
     },
     "National Highways & Motorway Police": {
       "snapshot_exists": true,
-      "snapshot_generated_at": "2026-07-23T22:02:29.420639Z",
+      "snapshot_generated_at": "2026-07-24T06:26:58.378845Z",
       "snapshot_age_hours": 0.0,
       "snapshot_record_count": 0,
       "snapshot_health": "empty",
@@ -288,15 +288,15 @@
     },
     "National Job Portal Pakistan": {
       "snapshot_exists": true,
-      "snapshot_generated_at": "2026-07-23T22:02:29.420639Z",
+      "snapshot_generated_at": "2026-07-24T06:26:58.378845Z",
       "snapshot_age_hours": 0.0,
-      "snapshot_record_count": 14,
+      "snapshot_record_count": 15,
       "snapshot_health": "fresh",
       "snapshot_path": "/home/runner/work/career-client-agent/career-client-agent/backend_agent/data/cache/government_jobs/njp_verified.json"
     },
     "OTS": {
       "snapshot_exists": true,
-      "snapshot_generated_at": "2026-07-23T22:02:29.420639Z",
+      "snapshot_generated_at": "2026-07-24T06:26:58.378845Z",
       "snapshot_age_hours": 0.0,
       "snapshot_record_count": 0,
       "snapshot_health": "empty",
@@ -304,7 +304,7 @@
     },
     "PITB Careers": {
       "snapshot_exists": true,
-      "snapshot_generated_at": "2026-07-23T22:02:29.420639Z",
+      "snapshot_generated_at": "2026-07-24T06:26:58.378845Z",
       "snapshot_age_hours": 0.0,
       "snapshot_record_count": 0,
       "snapshot_health": "empty",
@@ -320,7 +320,7 @@
     },
     "PTS": {
       "snapshot_exists": true,
-      "snapshot_generated_at": "2026-07-23T22:02:29.420639Z",
+      "snapshot_generated_at": "2026-07-24T06:26:58.378845Z",
       "snapshot_age_hours": 0.0,
       "snapshot_record_count": 0,
       "snapshot_health": "empty",
@@ -329,7 +329,7 @@
     "Pakistan Air Force": {
       "snapshot_exists": true,
       "snapshot_generated_at": "2026-06-25T06:42:30.345451Z",
-      "snapshot_age_hours": 687.33,
+      "snapshot_age_hours": 695.74,
       "snapshot_record_count": 0,
       "snapshot_health": "empty",
       "snapshot_path": "/home/runner/work/career-client-agent/career-client-agent/backend_agent/data/cache/government_jobs/pakistan_air_force_verified.json"
@@ -352,7 +352,7 @@
     },
     "Pakistan Jobs Bank": {
       "snapshot_exists": true,
-      "snapshot_generated_at": "2026-07-23T22:02:29.420639Z",
+      "snapshot_generated_at": "2026-07-24T06:26:58.378845Z",
       "snapshot_age_hours": 0.0,
       "snapshot_record_count": 1,
       "snapshot_health": "fresh",
@@ -361,14 +361,14 @@
     "Pakistan Navy": {
       "snapshot_exists": true,
       "snapshot_generated_at": "2026-06-25T06:42:30.345451Z",
-      "snapshot_age_hours": 687.33,
+      "snapshot_age_hours": 695.74,
       "snapshot_record_count": 0,
       "snapshot_health": "empty",
       "snapshot_path": "/home/runner/work/career-client-agent/career-client-agent/backend_agent/data/cache/government_jobs/pakistan_navy_verified.json"
     },
     "Pakistan Railways": {
       "snapshot_exists": true,
-      "snapshot_generated_at": "2026-07-23T22:02:29.420639Z",
+      "snapshot_generated_at": "2026-07-24T06:26:58.378845Z",
       "snapshot_age_hours": 0.0,
       "snapshot_record_count": 0,
       "snapshot_health": "empty",
@@ -376,7 +376,7 @@
     },
     "Pakistan Rangers": {
       "snapshot_exists": true,
-      "snapshot_generated_at": "2026-07-23T22:02:29.420639Z",
+      "snapshot_generated_at": "2026-07-24T06:26:58.378845Z",
       "snapshot_age_hours": 0.0,
       "snapshot_record_count": 0,
       "snapshot_health": "empty",
@@ -385,14 +385,14 @@
     "Punjab Education Department": {
       "snapshot_exists": true,
       "snapshot_generated_at": "2026-06-25T06:42:30.345451Z",
-      "snapshot_age_hours": 687.33,
+      "snapshot_age_hours": 695.74,
       "snapshot_record_count": 0,
       "snapshot_health": "empty",
       "snapshot_path": "/home/runner/work/career-client-agent/career-client-agent/backend_agent/data/cache/government_jobs/punjab_education_department_verified.json"
     },
     "Punjab Health Department": {
       "snapshot_exists": true,
-      "snapshot_generated_at": "2026-07-23T22:02:29.420639Z",
+      "snapshot_generated_at": "2026-07-24T06:26:58.378845Z",
       "snapshot_age_hours": 0.0,
       "snapshot_record_count": 0,
       "snapshot_health": "empty",
@@ -401,7 +401,7 @@
     "Punjab Jobs Portal": {
       "snapshot_exists": true,
       "snapshot_generated_at": "2026-06-25T06:42:30.345451Z",
-      "snapshot_age_hours": 687.33,
+      "snapshot_age_hours": 695.74,
       "snapshot_record_count": 70,
       "snapshot_health": "stale",
       "snapshot_path": "/home/runner/work/career-client-agent/career-client-agent/backend_agent/data/cache/government_jobs/punjab_jobs_portal_verified.json"
@@ -416,7 +416,7 @@
     },
     "STS": {
       "snapshot_exists": true,
-      "snapshot_generated_at": "2026-07-23T22:02:29.420639Z",
+      "snapshot_generated_at": "2026-07-24T06:26:58.378845Z",
       "snapshot_age_hours": 0.0,
       "snapshot_record_count": 0,
       "snapshot_health": "empty",
@@ -424,7 +424,7 @@
     },
     "UET Lahore": {
       "snapshot_exists": true,
-      "snapshot_generated_at": "2026-07-23T22:02:29.420639Z",
+      "snapshot_generated_at": "2026-07-24T06:26:58.378845Z",
       "snapshot_age_hours": 0.0,
       "snapshot_record_count": 0,
       "snapshot_health": "empty",
@@ -432,7 +432,7 @@
     },
     "University of the Punjab": {
       "snapshot_exists": true,
-      "snapshot_generated_at": "2026-07-23T22:02:29.420639Z",
+      "snapshot_generated_at": "2026-07-24T06:26:58.378845Z",
       "snapshot_age_hours": 0.0,
       "snapshot_record_count": 0,
       "snapshot_health": "empty",
