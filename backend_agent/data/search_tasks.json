@@ -29,7 +29,7 @@
     "daily_limit": 10,
     "is_active": true,
     "created_at": "2026-06-19",
-    "last_run_at": "2026-08-30T23:06:00.876832+00:00"
+    "last_run_at": "2026-08-31T10:37:51.596218+00:00"
   },
   {
     "id": "default_visa_jobs",
@@ -54,7 +54,7 @@
     "daily_limit": 5,
     "is_active": true,
     "created_at": "2026-06-19",
-    "last_run_at": "2026-08-30T23:06:11.401199+00:00"
+    "last_run_at": "2026-08-31T10:38:47.694024+00:00"
   },
   {
     "id": "default_ms_scholarships",
@@ -75,7 +75,7 @@
     "daily_limit": 10,
     "is_active": true,
     "created_at": "2026-06-19",
-    "last_run_at": "2026-08-30T23:06:11.951894+00:00"
+    "last_run_at": "2026-08-31T10:38:48.417390+00:00"
   },
   {
     "id": "default_government_jobs",
@@ -124,7 +124,7 @@
     "daily_limit": 200,
     "is_active": true,
     "created_at": "2026-06-19",
-    "last_run_at": "2026-08-30T23:06:44.386048+00:00"
+    "last_run_at": "2026-08-31T10:39:22.584579+00:00"
   },
   {
     "id": "default_client_leads",
@@ -157,6 +157,6 @@
     "daily_limit": 5,
     "is_active": true,
     "created_at": "2026-06-19",
-    "last_run_at": "2026-08-30T23:06:47.675141+00:00"
+    "last_run_at": "2026-08-31T10:39:26.229913+00:00"
   }
 ]
