@@ -18,13 +18,13 @@
     "fresher_friendly": false,
     "training_provided": false,
     "source_name": "National Job Portal Pakistan",
-    "found_at": "2026-09-05T11:44:40.342185Z",
+    "found_at": "2026-09-05T22:37:00.484534Z",
     "freshness_status": "older",
     "required_education": "BS Computer Science (BSCS) BS Artificial Intelligence BS Cybersecurity BS Information Systems BS Information Technology (BSIT) BS Computer Engineering BBA (Project Management) BBA (Technology Management) EMBA (IT) Master of Technology (MTech) MS Computer Science (MSCS) MS Information Technology (MSIT) Master of Computer Science (MCS) MS Computer Software Engineering BE Software Engineering MBA (Management Information System) MS Information Security MS Cybersecurity MS Computer Systems Engineering MBA (Information Technology Management) MS Computer Engineering MS Innovative Technologies in Learning MS Data Analytics BS Computer Systems Engineering BE Artificial Intelligence Bs Information Technology (Bridging) Master of Information Technology- MIT BS Database Administration BS Digital Systems & Web Technology Bachelors of Business and Information Technology (BBIT) MS Computer and Network Security MS Computer and Information Technology BE Computers Systems and Software Engineering MBA (Technology Management) BE Network Engineering BS Computer Networks BS Network & Security BS Network Engineering Technology BS Information Security BS Information & Communication Technology MS in IT Project Management BS Information Assurance BS Network Security BE Systems Engineering MS Information Systems Read More",
     "eligibility_domicile": "All Pakistan",
     "age_limit": "",
     "advertisement_link": "",
-    "match_reason": "Qualification accepts a BS, bachelor's degree, graduation, 16 years education, or an equivalent bachelor-level credential. Punjab residents can apply through Punjab domicile, open merit, federal, or all-Pakistan eligibility. The vacancy is published by a government/public source. The application deadline is still open.",
+    "match_reason": "Qualification accepts a BS, bachelor's degree, graduation, 16 years education, or an equivalent bachelor-level credential. Punjab residents can apply through Punjab domicile, open merit, federal, or all-Pakistan eligibility. The vacancy is published by a government/public source. The application deadline is still open. Matches user profile/task criteria: bachelor, bachelors, graduation, 16 years education, punjab domicile.",
     "bs_software_engineering_eligible": "Yes",
     "punjab_candidate_eligible": "Yes",
     "is_mock": false,
@@ -40,10 +40,10 @@
     "job_scale": "GRADE LEVEL",
     "advertisement_number": "",
     "is_source_review_link": false,
-    "is_cached": false,
-    "cache_reason": "",
-    "cached_from_run": "",
-    "source_status": "live",
+    "is_cached": true,
+    "cache_reason": "source_unavailable",
+    "cached_from_run": "2026-09-05T11:45:36.664007Z",
+    "source_status": "cached_fallback",
     "cache_warning": "",
     "lead_category": "",
     "budget": "",
@@ -71,6 +71,6 @@
     "apply_link": "https://www.njp.gov.pk/jobs/9611",
     "apply_url": "https://www.njp.gov.pk/jobs/9611",
     "source": "National Job Portal Pakistan",
-    "eligibility_reason": "Qualification accepts a BS, bachelor's degree, graduation, 16 years education, or an equivalent bachelor-level credential. Punjab residents can apply through Punjab domicile, open merit, federal, or all-Pakistan eligibility. The vacancy is published by a government/public source. The application deadline is still open."
+    "eligibility_reason": "Qualification accepts a BS, bachelor's degree, graduation, 16 years education, or an equivalent bachelor-level credential. Punjab residents can apply through Punjab domicile, open merit, federal, or all-Pakistan eligibility. The vacancy is published by a government/public source. The application deadline is still open. Matches user profile/task criteria: bachelor, bachelors, graduation, 16 years education, punjab domicile."
   }
 ]
