@@ -1,21 +1,17 @@
 {
-  "last_run_time": "2026-09-24T09:01:57.925177Z",
-  "total_jobs": 7,
+  "last_run_time": "2026-09-24T13:25:19.145698Z",
+  "total_jobs": 10,
   "total_scholarships": 10,
   "total_government_jobs": 0,
   "total_client_leads": 5,
   "failed_sources": [
-    "ASF Careers",
     "Company Career Pages (Greenhouse)",
-    "FIA Careers",
     "FPSC",
     "Frontier Corps",
     "Glassdoor",
-    "Government College University Lahore",
     "Higher Education Commission",
     "Indeed",
     "NADRA Careers",
-    "NTS",
     "National Highways & Motorway Police",
     "PPSC",
     "Pakistan Air Force",
@@ -33,28 +29,10 @@
   ],
   "source_failures": [
     {
-      "source_name": "ASF Careers",
-      "status": "failed",
-      "failure_reason": "ASF Careers request failed: The read operation timed out",
-      "fallback_used": false,
-      "cached_records_used": 0,
-      "cache_snapshot_used": false,
-      "cache_snapshot_path": ""
-    },
-    {
       "source_name": "Company Career Pages (Greenhouse)",
       "status": "failed",
       "failure_reason": "Company Career Pages (Greenhouse) request failed: HTTP Error 404: Not Found",
       "fallback_used": false
-    },
-    {
-      "source_name": "FIA Careers",
-      "status": "failed",
-      "failure_reason": "FIA Careers request failed: <urlopen error [Errno 104] Connection reset by peer>",
-      "fallback_used": false,
-      "cached_records_used": 0,
-      "cache_snapshot_used": false,
-      "cache_snapshot_path": ""
     },
     {
       "source_name": "FPSC",
@@ -81,15 +59,6 @@
       "fallback_used": false
     },
     {
-      "source_name": "Government College University Lahore",
-      "status": "failed",
-      "failure_reason": "Government College University Lahore request failed: <urlopen error timed out>",
-      "fallback_used": false,
-      "cached_records_used": 0,
-      "cache_snapshot_used": false,
-      "cache_snapshot_path": ""
-    },
-    {
       "source_name": "Higher Education Commission",
       "status": "failed",
       "failure_reason": "Higher Education Commission request failed: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1017)>",
@@ -108,15 +77,6 @@
       "source_name": "NADRA Careers",
       "status": "failed",
       "failure_reason": "NADRA Careers request failed: HTTP Error 404: Not Found",
-      "fallback_used": false,
-      "cached_records_used": 0,
-      "cache_snapshot_used": false,
-      "cache_snapshot_path": ""
-    },
-    {
-      "source_name": "NTS",
-      "status": "failed",
-      "failure_reason": "NTS request failed: The read operation timed out",
       "fallback_used": false,
       "cached_records_used": 0,
       "cache_snapshot_used": false,
@@ -255,15 +215,15 @@
   "government_jobs_snapshot_health": {
     "ASF Careers": {
       "snapshot_exists": true,
-      "snapshot_generated_at": "2026-09-23T23:25:32.302227Z",
-      "snapshot_age_hours": 9.62,
+      "snapshot_generated_at": "2026-09-24T13:26:33.660480Z",
+      "snapshot_age_hours": 0.0,
       "snapshot_record_count": 0,
       "snapshot_health": "empty",
       "snapshot_path": "/home/runner/work/career-client-agent/career-client-agent/backend_agent/data/cache/government_jobs/asf_careers_verified.json"
     },
     "FBR Careers": {
       "snapshot_exists": true,
-      "snapshot_generated_at": "2026-09-24T09:02:58.224307Z",
+      "snapshot_generated_at": "2026-09-24T13:26:33.660480Z",
       "snapshot_age_hours": 0.0,
       "snapshot_record_count": 0,
       "snapshot_health": "empty",
@@ -271,8 +231,8 @@
     },
     "FIA Careers": {
       "snapshot_exists": true,
-      "snapshot_generated_at": "2026-09-23T23:25:32.302227Z",
-      "snapshot_age_hours": 9.62,
+      "snapshot_generated_at": "2026-09-24T13:26:33.660480Z",
+      "snapshot_age_hours": 0.0,
       "snapshot_record_count": 0,
       "snapshot_health": "empty",
       "snapshot_path": "/home/runner/work/career-client-agent/career-client-agent/backend_agent/data/cache/government_jobs/fia_careers_verified.json"
@@ -295,8 +255,8 @@
     },
     "Government College University Lahore": {
       "snapshot_exists": true,
-      "snapshot_generated_at": "2026-09-23T23:25:32.302227Z",
-      "snapshot_age_hours": 9.62,
+      "snapshot_generated_at": "2026-09-24T13:26:33.660480Z",
+      "snapshot_age_hours": 0.0,
       "snapshot_record_count": 0,
       "snapshot_health": "empty",
       "snapshot_path": "/home/runner/work/career-client-agent/career-client-agent/backend_agent/data/cache/government_jobs/government_college_university_lahore_verified.json"
@@ -311,7 +271,7 @@
     },
     "Ministry of IT & Telecom": {
       "snapshot_exists": true,
-      "snapshot_generated_at": "2026-09-24T09:02:58.224307Z",
+      "snapshot_generated_at": "2026-09-24T13:26:33.660480Z",
       "snapshot_age_hours": 0.0,
       "snapshot_record_count": 0,
       "snapshot_health": "empty",
@@ -319,7 +279,7 @@
     },
     "NAB Careers": {
       "snapshot_exists": true,
-      "snapshot_generated_at": "2026-09-24T09:02:58.224307Z",
+      "snapshot_generated_at": "2026-09-24T13:26:33.660480Z",
       "snapshot_age_hours": 0.0,
       "snapshot_record_count": 0,
       "snapshot_health": "empty",
@@ -335,8 +295,8 @@
     },
     "NTS": {
       "snapshot_exists": true,
-      "snapshot_generated_at": "2026-09-23T23:25:32.302227Z",
-      "snapshot_age_hours": 9.62,
+      "snapshot_generated_at": "2026-09-24T13:26:33.660480Z",
+      "snapshot_age_hours": 0.0,
       "snapshot_record_count": 0,
       "snapshot_health": "empty",
       "snapshot_path": "/home/runner/work/career-client-agent/career-client-agent/backend_agent/data/cache/government_jobs/nts_verified.json"
@@ -344,14 +304,14 @@
     "National Highways & Motorway Police": {
       "snapshot_exists": true,
       "snapshot_generated_at": "2026-08-06T06:31:16.988628Z",
-      "snapshot_age_hours": 1178.53,
+      "snapshot_age_hours": 1182.92,
       "snapshot_record_count": 0,
       "snapshot_health": "empty",
       "snapshot_path": "/home/runner/work/career-client-agent/career-client-agent/backend_agent/data/cache/government_jobs/national_highways_motorway_police_verified.json"
     },
     "National Job Portal Pakistan": {
       "snapshot_exists": true,
-      "snapshot_generated_at": "2026-09-24T09:02:58.224307Z",
+      "snapshot_generated_at": "2026-09-24T13:26:33.660480Z",
       "snapshot_age_hours": 0.0,
       "snapshot_record_count": 0,
       "snapshot_health": "empty",
@@ -359,7 +319,7 @@
     },
     "OTS": {
       "snapshot_exists": true,
-      "snapshot_generated_at": "2026-09-24T09:02:58.224307Z",
+      "snapshot_generated_at": "2026-09-24T13:26:33.660480Z",
       "snapshot_age_hours": 0.0,
       "snapshot_record_count": 0,
       "snapshot_health": "empty",
@@ -367,7 +327,7 @@
     },
     "PITB Careers": {
       "snapshot_exists": true,
-      "snapshot_generated_at": "2026-09-24T09:02:58.224307Z",
+      "snapshot_generated_at": "2026-09-24T13:26:33.660480Z",
       "snapshot_age_hours": 0.0,
       "snapshot_record_count": 0,
       "snapshot_health": "empty",
@@ -383,7 +343,7 @@
     },
     "PTS": {
       "snapshot_exists": true,
-      "snapshot_generated_at": "2026-09-24T09:02:58.224307Z",
+      "snapshot_generated_at": "2026-09-24T13:26:33.660480Z",
       "snapshot_age_hours": 0.0,
       "snapshot_record_count": 0,
       "snapshot_health": "empty",
@@ -392,7 +352,7 @@
     "Pakistan Air Force": {
       "snapshot_exists": true,
       "snapshot_generated_at": "2026-06-25T06:42:30.345451Z",
-      "snapshot_age_hours": 2186.34,
+      "snapshot_age_hours": 2190.73,
       "snapshot_record_count": 0,
       "snapshot_health": "empty",
       "snapshot_path": "/home/runner/work/career-client-agent/career-client-agent/backend_agent/data/cache/government_jobs/pakistan_air_force_verified.json"
@@ -415,7 +375,7 @@
     },
     "Pakistan Jobs Bank": {
       "snapshot_exists": true,
-      "snapshot_generated_at": "2026-09-24T09:02:58.224307Z",
+      "snapshot_generated_at": "2026-09-24T13:26:33.660480Z",
       "snapshot_age_hours": 0.0,
       "snapshot_record_count": 0,
       "snapshot_health": "empty",
@@ -424,14 +384,14 @@
     "Pakistan Navy": {
       "snapshot_exists": true,
       "snapshot_generated_at": "2026-06-25T06:42:30.345451Z",
-      "snapshot_age_hours": 2186.34,
+      "snapshot_age_hours": 2190.73,
       "snapshot_record_count": 0,
       "snapshot_health": "empty",
       "snapshot_path": "/home/runner/work/career-client-agent/career-client-agent/backend_agent/data/cache/government_jobs/pakistan_navy_verified.json"
     },
     "Pakistan Railways": {
       "snapshot_exists": true,
-      "snapshot_generated_at": "2026-09-24T09:02:58.224307Z",
+      "snapshot_generated_at": "2026-09-24T13:26:33.660480Z",
       "snapshot_age_hours": 0.0,
       "snapshot_record_count": 0,
       "snapshot_health": "empty",
@@ -439,7 +399,7 @@
     },
     "Pakistan Rangers": {
       "snapshot_exists": true,
-      "snapshot_generated_at": "2026-09-24T09:02:58.224307Z",
+      "snapshot_generated_at": "2026-09-24T13:26:33.660480Z",
       "snapshot_age_hours": 0.0,
       "snapshot_record_count": 0,
       "snapshot_health": "empty",
@@ -448,7 +408,7 @@
     "Punjab Education Department": {
       "snapshot_exists": true,
       "snapshot_generated_at": "2026-06-25T06:42:30.345451Z",
-      "snapshot_age_hours": 2186.34,
+      "snapshot_age_hours": 2190.73,
       "snapshot_record_count": 0,
       "snapshot_health": "empty",
       "snapshot_path": "/home/runner/work/career-client-agent/career-client-agent/backend_agent/data/cache/government_jobs/punjab_education_department_verified.json"
@@ -456,7 +416,7 @@
     "Punjab Health Department": {
       "snapshot_exists": true,
       "snapshot_generated_at": "2026-09-21T14:59:31.428121Z",
-      "snapshot_age_hours": 66.06,
+      "snapshot_age_hours": 70.45,
       "snapshot_record_count": 0,
       "snapshot_health": "empty",
       "snapshot_path": "/home/runner/work/career-client-agent/career-client-agent/backend_agent/data/cache/government_jobs/punjab_health_department_verified.json"
@@ -464,7 +424,7 @@
     "Punjab Jobs Portal": {
       "snapshot_exists": true,
       "snapshot_generated_at": "2026-06-25T06:42:30.345451Z",
-      "snapshot_age_hours": 2186.34,
+      "snapshot_age_hours": 2190.73,
       "snapshot_record_count": 70,
       "snapshot_health": "stale",
       "snapshot_path": "/home/runner/work/career-client-agent/career-client-agent/backend_agent/data/cache/government_jobs/punjab_jobs_portal_verified.json"
@@ -479,7 +439,7 @@
     },
     "STS": {
       "snapshot_exists": true,
-      "snapshot_generated_at": "2026-09-24T09:02:58.224307Z",
+      "snapshot_generated_at": "2026-09-24T13:26:33.660480Z",
       "snapshot_age_hours": 0.0,
       "snapshot_record_count": 0,
       "snapshot_health": "empty",
@@ -488,14 +448,14 @@
     "UET Lahore": {
       "snapshot_exists": true,
       "snapshot_generated_at": "2026-09-22T23:27:35.490099Z",
-      "snapshot_age_hours": 33.59,
+      "snapshot_age_hours": 37.98,
       "snapshot_record_count": 0,
       "snapshot_health": "empty",
       "snapshot_path": "/home/runner/work/career-client-agent/career-client-agent/backend_agent/data/cache/government_jobs/uet_lahore_verified.json"
     },
     "University of the Punjab": {
       "snapshot_exists": true,
-      "snapshot_generated_at": "2026-09-24T09:02:58.224307Z",
+      "snapshot_generated_at": "2026-09-24T13:26:33.660480Z",
       "snapshot_age_hours": 0.0,
       "snapshot_record_count": 0,
       "snapshot_health": "empty",
