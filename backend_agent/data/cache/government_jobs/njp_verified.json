@@ -1,6 +1,6 @@
 {
   "source_name": "National Job Portal Pakistan",
-  "generated_at": "2026-10-23T09:09:29.175862Z",
+  "generated_at": "2026-10-23T13:15:19.271386Z",
   "record_count": 5,
   "records": [
     {
@@ -40,7 +40,7 @@
       "cv_changes_needed": [],
       "force_category": "",
       "post_count": 1,
-      "job_scale": "GRADE LUMP",
+      "job_scale": "SCALE(1",
       "advertisement_number": "",
       "is_source_review_link": false,
       "is_cached": false,
@@ -111,7 +111,7 @@
       "cv_changes_needed": [],
       "force_category": "",
       "post_count": 1,
-      "job_scale": "GRADE LUMP",
+      "job_scale": "SCALE(1",
       "advertisement_number": "",
       "is_source_review_link": false,
       "is_cached": false,
@@ -181,7 +181,7 @@
       "cv_changes_needed": [],
       "force_category": "",
       "post_count": 1,
-      "job_scale": "GRADE LUMP",
+      "job_scale": "SCALE(1",
       "advertisement_number": "",
       "is_source_review_link": false,
       "is_cached": false,
@@ -252,7 +252,7 @@
       "cv_changes_needed": [],
       "force_category": "",
       "post_count": 1,
-      "job_scale": "GRADE LUMP",
+      "job_scale": "SCALE(1",
       "advertisement_number": "",
       "is_source_review_link": false,
       "is_cached": false,
